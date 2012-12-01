@@ -1,0 +1,22 @@
+{
+    "name": "padam87/attribute-bundle",
+    "type": "symfony-bundle",
+    "description": "Padam87 AttributeBundle",
+    "keywords": ["symfony", "modularization"],
+    "homepage": "https://github.com/Padam87/AttributeBundle",
+    "authors": [
+        {
+            "name": "Adam Prager",
+            "email": "prager.adam87@gmail.com"
+        }
+    ],
+    "require": {
+        "padam87/search-bundle": "dev-master",
+        "knplabs/knp-paginator-bundle": "dev-master",
+        "netpositive/discriminatormapbundle": "*"
+    },
+    "autoload": {
+        "psr-0": { "Padam87\\AttributeBundle": "" }
+    },
+    "target-dir": "Padam87/AttributeBundle"
+}
