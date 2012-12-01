@@ -1,0 +1,83 @@
+{% block content %}
+    <div class="container">
+        <div class="row">
+
+            <div class="span12">
+
+                <div class="slate">
+
+                    <form class="form-inline clearfix" action="{{ path('padam87_attribute_schema_index') }}" method="GET" {{ form_enctype(form) }}>
+                        {% for name, field in form %}
+                            {% if name != '_token' %}
+                                {{ form_label(field) }}: 
+                            {% endif %}
+                            {{ form_widget(field) }}
+                        {% endfor %}
+                        <hr />
+                        <button class="btn btn-primary pull-right">
+                            <i class="icon-search"></i> {% trans %}search{% endtrans %}
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="span12 listing-buttons">
+                
+                <a href="{{ path('padam87_attribute_schema_new') }}" class="btn btn-primary">{% trans %}add{% endtrans %}</a>
+
+            </div>
+
+            <div class="span12">
+
+                <div class="slate">
+
+                    <div class="page-header">
+                        <h2>{% trans %}categories{% endtrans %}</h2>
+                    </div>
+
+                    <table class="orders-table table">
+                    <thead>
+                        <tr>
+                            <th>{{ pagination.sortable('schema.name'|trans, 'ad.name')|raw }}</th>
+                            <th class="actions">{% trans %}actions{% endtrans %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for Schema in pagination %}
+                        <tr>
+                            <td>
+                                <a class="" href="{{ path('padam87_attribute_schema_edit', {'id': Schema.getId()}) }}">
+                                    {{ Schema.getName() }}
+                                </a>
+                            </td>
+                            <td class="actions">
+                                <a class="btn btn-small btn-danger" href="{{ path('padam87_attribute_schema_delete', {'id': Schema.getId()}) }}">{% trans %}remove{% endtrans %}</a>
+                                <a class="btn btn-small btn-primary" href="{{ path('padam87_attribute_schema_edit', {'id': Schema.getId()}) }}">{% trans %}edit{% endtrans %}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="span12">
+
+                <div class="pagination pull-left">
+                    <ul>
+                        {{ pagination.render()|raw }}
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

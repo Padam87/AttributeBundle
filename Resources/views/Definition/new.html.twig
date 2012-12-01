@@ -1,0 +1,55 @@
+{% block content %}
+<div class="container">
+    <div class="row">            
+        <div class="span12">
+
+            <div class="slate">
+
+                <div class="page-header">
+                    <h2>{% trans %}attribute.new{% endtrans %}</h2>
+                </div>
+
+                <form class="form-horizontal" method="POST" action="{{ path('padam87_attribute_definition_new') }}">
+                    <fieldset>
+                        {{ form_row(form._token) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.description) }}
+                        {{ form_row(form.type) }}
+                            
+                        <div class="control-group">
+                            {{ form_label(form.options) }}
+
+                            <div class="controls clearfix">
+                                <ul id="options" data-prototype="{{ form_widget(form.options.vars.prototype.name)|e }}" class="unstyled">
+                                {% for option in form.options %}
+                                    <li>
+                                        {{ form_errors(option.name) }}
+                                        {{ form_widget(option.name) }}
+                                        <a class="btn" href="#" onclick="$(this).parent('li').remove(); return false;">
+                                            <i class="icon-remove"></i> {% trans %}remove{% endtrans %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                    <li>
+                                        <a class="btn" href="#" onclick="Prototype.add($('#options'), $(this).parent('li')); return false;">
+                                            <i class="icon-plus"></i> {% trans %}add{% endtrans %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">{% trans %}save{% endtrans %}</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/padam87attribute/js/prototype.js') }}"></script>
+{% endblock %}
