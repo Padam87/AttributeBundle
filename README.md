@@ -1,4 +1,4 @@
-# Module Bundle #
+# Attribute Bundle #
 
 An [EAV](http://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_model) implementation for Symfony2.
 
