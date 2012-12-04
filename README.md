@@ -167,9 +167,20 @@ Every new entity needs to have the attributes, so we have to clone them from the
 
 Each Attribute's form widget will be rendered as the definition specifies.
 
-### 2.7 Create your Definitions and Shcemas
+### 2.7 Create your Definitions and Schemas
 
 /admin/attribute-definition and /admin/attribute-schema
+
+### 2.8  View for Definitions and Schemas
+
+Athough the bundle provides a default view, you would propably want to create your own.
+You can do that by adding a folder, ad copying the bundles views here:
+
+	app/Resources/Padam87AttributeBundle
+
+OR
+
+You can create yout own bundle as a child of this one.
 
 ## 3. Depenedncies
 
