@@ -6,13 +6,22 @@ abstract class AbstractSchema
 {
     public function applyTo($entity, $attributeClass)
     {
-        foreach ($entity->getAttributes() as $Attribute) {
-            $entity->removeAttribute($Attribute);
+        foreach ($this->getAttributes() as $Attribute) {
+            $exists = false;
+            
+            foreach ($entity->getAttributes() as $EntityAttribute) {
+                if($Attribute->getDefinition()->getId() == $EntityAttribute->getDefinition()->getId()) {
+                    $exists = true;
+                    break;
+                }
+            }
+            
+            if(!$exists) {
+                $entity->addAttribute($this->transformAttribute($Attribute, $attributeClass));
+            }
         }
         
-        foreach ($this->getAttributes() as $Attribute) {
-            $entity->addAttribute($this->transformAttribute($Attribute, $attributeClass));
-        }
+        return $entity;
     }
     
     protected function transformAttribute($Attribute, $attributeClass)

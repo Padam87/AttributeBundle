@@ -1,0 +1,5 @@
+services:
+    schema.listener:
+        class: Padam87\AttributeBundle\Listener\SchemaListener
+        tags:
+            - { name: doctrine.event_listener, event: onFlush }
