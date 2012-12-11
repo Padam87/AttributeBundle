@@ -30,14 +30,6 @@ The route will be /admin/attribute-definition and /admin/attribute-schema this w
 ### 1.4 config.yml
 
 Insert this to your config.yml.
-
-	...
-
-	imports:
-		...
-	    - { resource: "@Padam87AttributeBundle/Resources/config/config.yml" }
-
-	...
     
 	padam87_attribute:
 	    schema:
@@ -155,33 +147,7 @@ Every new entity needs to have the attributes, so we have to clone them from the
         return $Product;
     }
 
-### 2.5 Create a form for your attribute
-
-	<?php
-	
-	namespace Padam87\BaseBundle\Form;
-	
-	use Padam87\AttributeBundle\Form\AttributeType as BaseAttributeType;
-	
-	class AttributeListType extends BaseAttributeType
-	{
-		public function getName()
-		{
-			return 'attribute_option';
-		}
-		
-		public function getDefaultOptions(array $options)
-		{
-			return array(
-				'data_class' => 'Padam87\BaseBundle\Entity\Attribute',
-			);
-		}
-	}
-
-
-### 2.6 Add attributes to your form
-
-	..
+### 2.5 Add attributes to your form
 
 	$builder->add('attributes', 'collection', array(
 		'type'          => new AttributeType(),
@@ -193,26 +159,19 @@ Every new entity needs to have the attributes, so we have to clone them from the
 		),
 	));
 
-	...
-
-### 2.7 Add attributes to your view
+### 2.6 Add attributes to your view
 
 	{% for attribute in form.attributes %}
-		{{ form_label(attribute.value, attribute.definition.getVars().choices[attribute.definition.getVars().value].label) }}
-        {{ form_widget(attribute.value) }}
-
-        <div style="display: none;">
-            {{ form_rest(attribute) }}
-        </div>
+        {{ form_widget(attribute) }}
     {% endfor %}
 
 Each Attribute's form widget will be rendered as the definition specifies.
 
-### 2.8 Create your Definitions and Schemas
+### 2.7 Create your Definitions and Schemas
 
 /admin/attribute-definition and /admin/attribute-schema
 
-### 2.9 View for Definitions and Schemas
+### 2.8  View for Definitions and Schemas
 
 Athough the bundle provides a default view, you would propably want to create your own.
 You can do that by adding a folder, ad copying the bundles views here:
@@ -223,7 +182,7 @@ OR
 
 You can create yout own bundle as a child of this one.
 
-## 3. Depenedencies
+## 3. Depenedncies
 
 [NetpositiveDiscriminatorMapBundle](https://github.com/Netpositive/NetpositiveDiscriminatorMapBundle)
 

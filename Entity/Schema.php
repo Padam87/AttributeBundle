@@ -38,11 +38,17 @@ class Schema extends AbstractSchema
     protected $attributes;
     
     /**
+     * @ORM\OneToMany(targetEntity="Group", mappedBy="schema", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    protected $groups;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function __toString()
@@ -138,5 +144,39 @@ class Schema extends AbstractSchema
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * Add groups
+     *
+     * @param \Padam87\AttributeBundle\Entity\Group $groups
+     * @return Schema
+     */
+    public function addGroup(\Padam87\AttributeBundle\Entity\Group $groups)
+    {
+        $groups->setSchema($this);
+        $this->groups[] = $groups;
+    
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \Padam87\AttributeBundle\Entity\Group $groups
+     */
+    public function removeGroup(\Padam87\AttributeBundle\Entity\Group $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

@@ -40,18 +40,25 @@ class Attribute
     private $required = FALSE;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Definition", inversedBy="definition")
+     * @ORM\ManyToOne(targetEntity="Definition", inversedBy="attributes")
      * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
      * @var Definition
      */
     private $definition;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Schema", inversedBy="schema")
+     * @ORM\ManyToOne(targetEntity="Schema", inversedBy="attributes")
      * @ORM\JoinColumn(name="schema_id", referencedColumnName="id")
      * @var Schema
      */
     private $schema;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="attributes")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @var Schema
+     */
+    private $group;
     
     public function __toString()
     {
@@ -181,5 +188,28 @@ class Attribute
     public function getUnit()
     {
         return $this->unit;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \Padam87\AttributeBundle\Entity\Group $group
+     * @return Attribute
+     */
+    public function setGroup(\Padam87\AttributeBundle\Entity\Group $group = null)
+    {
+        $this->group = $group;
+    
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \Padam87\AttributeBundle\Entity\Group 
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

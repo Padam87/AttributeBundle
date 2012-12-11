@@ -16,5 +16,6 @@ class SchemaListType extends SchemaType
             'required' => false
 		));;
 		$builder->remove('attributes');
+        $builder->remove('groups');
 	}
 }

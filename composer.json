@@ -2,7 +2,7 @@
     "name": "padam87/attribute-bundle",
     "type": "symfony-bundle",
     "description": "Padam87 AttributeBundle",
-    "keywords": ["symfony", "modularization"],
+    "keywords": ["symfony", "attribute", "eav"],
     "homepage": "https://github.com/Padam87/AttributeBundle",
     "authors": [
         {

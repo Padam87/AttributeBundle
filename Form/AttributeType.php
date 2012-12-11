@@ -28,7 +28,7 @@ class AttributeType extends AbstractType
 
 	public function getName()
 	{
-		return 'attribute_option';
+		return 'attribute';
 	}
 	
 	public function getDefaultOptions(array $options)

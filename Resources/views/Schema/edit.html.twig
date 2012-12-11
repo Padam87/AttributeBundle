@@ -38,6 +38,76 @@
                                 </ul>
                             </div>
                         </div>
+                            
+                        <div class="control-group">
+                            {{ form_label(form.groups) }}
+
+                            <div class="controls clearfix">
+                                
+                                {% set group_prototype %}
+                                    {{ form_widget(form.groups.vars.prototype.definition.name) }}
+                                    
+                                    <div class="control-group">
+                                        {{ form_label(form.groups.vars.prototype.attributes) }}
+
+                                        <div class="controls clearfix">
+                                            <ul id="groups___name___attributes" data-prototype="{{ form_widget(form.groups.vars.prototype.attributes.vars.prototype)|e }}" class="unstyled">
+                                            {% for attribute in form.groups.vars.prototype.attributes %}
+                                                <li>
+                                                    <a class="btn pull-right" href="#" onclick="$(this).parent('li').remove(); return false;">
+                                                        <i class="icon-remove"></i> {% trans %}remove{% endtrans %}
+                                                    </a>
+                                                    {{ form_errors(attribute) }}
+                                                    {{ form_widget(attribute) }}
+                                                    <hr />
+                                                </li>
+                                            {% endfor %}
+                                                <li>
+                                                    <a class="btn" href="#" onclick="Prototype.add($('#groups___name___attributes'), $(this).parent('li'), /__groupid__/g); return false;">
+                                                        <i class="icon-plus"></i> {% trans %}add{% endtrans %}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% endset %}
+                                    
+                                <ul id="groups" class="unstyled" data-prototype="{{ group_prototype|e }}">
+                                {% for group in form.groups %}
+                                    {{ form_widget(group.definition.name) }}
+                                    
+                                    <div class="control-group">
+                                        {{ form_label(group.attributes) }}
+
+                                        <div class="controls clearfix">
+                                            <ul id="groups___name___attributes" data-prototype="{{ form_widget(group.attributes.vars.prototype)|e }}" class="unstyled">
+                                            {% for attribute in group.attributes %}
+                                                <li>
+                                                    <a class="btn pull-right" href="#" onclick="$(this).parent('li').remove(); return false;">
+                                                        <i class="icon-remove"></i> {% trans %}remove{% endtrans %}
+                                                    </a>
+                                                    {{ form_errors(attribute) }}
+                                                    {{ form_widget(attribute) }}
+                                                    <hr />
+                                                </li>
+                                            {% endfor %}
+                                                <li>
+                                                    <a class="btn" href="#" onclick="Prototype.add($('#groups___name___attributes'), $(this).parent('li'), /__groupid__/g); return false;">
+                                                        <i class="icon-plus"></i> {% trans %}add{% endtrans %}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                    <li>
+                                        <a class="btn" href="#" onclick="Prototype.add($('#groups'), $(this).parent('li')); return false;">
+                                            <i class="icon-plus"></i> {% trans %}add{% endtrans %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </fieldset>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">{% trans %}save{% endtrans %}</button>

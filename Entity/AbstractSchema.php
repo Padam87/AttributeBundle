@@ -4,7 +4,7 @@ namespace Padam87\AttributeBundle\Entity;
 
 abstract class AbstractSchema
 {
-    public function applyTo($entity, $attributeClass)
+    public function applyTo($entity, $attributeClass, $groupClass = null)
     {
         foreach ($this->getAttributes() as $Attribute) {
             $exists = false;
@@ -21,6 +21,12 @@ abstract class AbstractSchema
             }
         }
         
+        if ($groupClass != null) {
+            foreach ($this->getGroups() as $Group) {
+                $entity->addGroup($this->transformGroup($Group, $attributeClass, $groupClass));
+            }
+        }
+        
         return $entity;
     }
     
@@ -33,5 +39,17 @@ abstract class AbstractSchema
         $EntityAttribute->setDefinition($Attribute->getDefinition());
 
         return $EntityAttribute;
+    }
+    
+    protected function transformGroup($Group, $attributeClass, $groupClass)
+    {
+        $EntityGroup = new $groupClass();
+        $EntityGroup->setDefinition($Group->getDefinition());
+        
+        foreach ($Group->getAttributes() as $Attribute) {
+            $EntityGroup->addAttribute($this->transformAttribute($Attribute, $attributeClass));
+        }
+        
+        return $EntityGroup;
     }
 }

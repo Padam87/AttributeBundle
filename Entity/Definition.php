@@ -43,7 +43,7 @@ class Definition
 	private $options;
     
     /**
-     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="attributes")
+     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="definition")
      */
     protected $attributes;
     

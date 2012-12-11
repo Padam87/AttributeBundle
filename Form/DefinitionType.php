@@ -5,8 +5,6 @@ namespace Padam87\AttributeBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Padam87\AttributeBundle\Form\Extension\ChoiceList\DefinitionTypeChoiceList;
-
 class DefinitionType extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
