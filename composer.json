@@ -13,7 +13,7 @@
     "require": {
         "padam87/search-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
-        "netpositive/discriminatormapbundle": "*"
+        "netpositive/discriminatormapbundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Padam87\\AttributeBundle": "" }
