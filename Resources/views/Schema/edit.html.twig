@@ -1,6 +1,6 @@
 {% block content %}
 <div class="container">
-    <div class="row">            
+    <div class="row">
         <div class="span12">
 
             <div class="slate">
@@ -14,7 +14,7 @@
                         {{ form_row(form._token) }}
                         {{ form_row(form.name) }}
                         {{ form_row(form.class) }}
-                            
+
                         <div class="control-group">
                             {{ form_label(form.attributes) }}
 
@@ -38,15 +38,15 @@
                                 </ul>
                             </div>
                         </div>
-                            
+
                         <div class="control-group">
                             {{ form_label(form.groups) }}
 
                             <div class="controls clearfix">
-                                
+
                                 {% set group_prototype %}
                                     {{ form_widget(form.groups.vars.prototype.definition.name) }}
-                                    
+
                                     <div class="control-group">
                                         {{ form_label(form.groups.vars.prototype.attributes) }}
 
@@ -71,11 +71,11 @@
                                         </div>
                                     </div>
                                 {% endset %}
-                                    
+
                                 <ul id="groups" class="unstyled" data-prototype="{{ group_prototype|e }}">
                                 {% for group in form.groups %}
                                     {{ form_widget(group.definition.name) }}
-                                    
+
                                     <div class="control-group">
                                         {{ form_label(group.attributes) }}
 

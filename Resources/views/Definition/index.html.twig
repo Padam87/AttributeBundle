@@ -9,7 +9,7 @@
                     <form class="form-inline clearfix" action="{{ path('padam87_attribute_definition_index') }}" method="GET" {{ form_enctype(form) }}>
                         {% for name, field in form %}
                             {% if name != '_token' %}
-                                {{ form_label(field) }}: 
+                                {{ form_label(field) }}:
                             {% endif %}
                             {{ form_widget(field) }}
                         {% endfor %}
@@ -27,7 +27,7 @@
         <div class="row">
 
             <div class="span12 listing-buttons">
-                
+
                 <a href="{{ path('padam87_attribute_definition_new') }}" class="btn btn-primary">{% trans %}add{% endtrans %}</a>
 
             </div>

@@ -17,36 +17,36 @@ class Definition
      * @var int
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-	private $name;
-    
+    private $name;
+
     /**
      * @ORM\Column(type="text", nullable=true)
      * @var text
      */
     private $description;
-    
+
     /**
      * @ORM\Column(type="string", length=100)
      * @var string
      */
-	private $type;
-    
+    private $type;
+
     /**
      * @ORM\OneToMany(targetEntity="Option", mappedBy="definition", orphanRemoval=true, cascade={"persist", "remove"})
      * @var ArrayCollection
      */
-	private $options;
-    
+    private $options;
+
     /**
      * @ORM\OneToMany(targetEntity="Attribute", mappedBy="definition")
      */
     protected $attributes;
-    
+
     /**
      * Constructor
      */
@@ -55,7 +55,7 @@ class Definition
         $this->options = new \Doctrine\Common\Collections\ArrayCollection();
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     public function __toString()
     {
         return $this->name;
@@ -64,7 +64,7 @@ class Definition
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,20 +74,20 @@ class Definition
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string     $name
      * @return Definition
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -97,20 +97,20 @@ class Definition
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string     $description
      * @return Definition
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -120,20 +120,20 @@ class Definition
     /**
      * Set type
      *
-     * @param string $type
+     * @param  string     $type
      * @return Definition
      */
     public function setType($type)
     {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -143,14 +143,14 @@ class Definition
     /**
      * Add options
      *
-     * @param Padam87\AttributeBundle\Entity\Option $options
+     * @param  Padam87\AttributeBundle\Entity\Option $options
      * @return Definition
      */
     public function addOption(\Padam87\AttributeBundle\Entity\Option $options)
     {
         $options->setDefinition($this);
         $this->options[] = $options;
-    
+
         return $this;
     }
 
@@ -167,7 +167,7 @@ class Definition
     /**
      * Get options
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getOptions()
     {
@@ -177,13 +177,13 @@ class Definition
     /**
      * Add attributes
      *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @param  \Padam87\AttributeBundle\Entity\Attribute $attributes
      * @return Definition
      */
     public function addAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
     {
         $this->attributes[] = $attributes;
-    
+
         return $this;
     }
 
@@ -200,7 +200,7 @@ class Definition
     /**
      * Get attributes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAttributes()
     {

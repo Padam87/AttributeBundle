@@ -26,47 +26,45 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
     {
         $data = $event->getData();
         $form = $event->getForm();
-        
+
         if (null === $data || !$form->has('value')) {
             return;
         }
-        
-		if($data->getDefinition() != null) {
-			$params = array();
-			
-			$type = $data->getDefinition()->getType();
-			$options = $data->getDefinition()->getOptions()->toArray();
-			
-			if($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
-				
-				if($type == 'radio') {
+
+        if ($data->getDefinition() != null) {
+            $params = array();
+
+            $type = $data->getDefinition()->getType();
+            $options = $data->getDefinition()->getOptions()->toArray();
+
+            if ($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
+
+                if ($type == 'radio') {
                     $params['expanded'] = true;
-					$params['multiple'] = false;
-				}
-				else if($type == 'checkbox') {
+                    $params['multiple'] = false;
+                } elseif ($type == 'checkbox') {
                     $params['expanded'] = true;
-					$params['multiple'] = true;
-				}
-				
-				$params['choices'] = array();
-				
-				foreach($options as $option) {
-					$params['choices'][$option->getName()] = $option->getName();
-				}
-			}
-            
-            if($data->getRequired() == true) {
-                $params['required'] = true;
+                    $params['multiple'] = true;
+                }
+
+                $params['choices'] = array();
+
+                foreach ($options as $option) {
+                    $params['choices'][$option->getName()] = $option->getName();
+                }
             }
-            else {
+
+            if ($data->getRequired() == true) {
+                $params['required'] = true;
+            } else {
                 $params['required'] = false;
             }
-            
+
             $params['label'] = $data->getDefinition()->getName();
-            
+
             if($type == 'text') $params['attr']['addon'] = $data->getUnit();
-			
-			$form->add($this->factory->createNamed('value', $type, $data->getValue(), $params));
-		}
+
+            $form->add($this->factory->createNamed('value', $type, $data->getValue(), $params));
+        }
     }
 }

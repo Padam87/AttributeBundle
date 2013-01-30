@@ -7,21 +7,21 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class GroupDefinitionType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('name', 'text', array(
-		));
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('name', 'text', array(
+        ));
+    }
 
-	public function getName()
-	{
-		return 'attribute_group_definition';
-	}
-	
-	public function getDefaultOptions(array $options)
-	{
-		return array(
-			'data_class' => 'Padam87\AttributeBundle\Entity\GroupDefinition',
-		);
-	}
+    public function getName()
+    {
+        return 'attribute_group_definition';
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Padam87\AttributeBundle\Entity\GroupDefinition',
+        );
+    }
 }

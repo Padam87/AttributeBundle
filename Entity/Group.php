@@ -20,26 +20,26 @@ class Group
      * @var int
      */
     private $id;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Schema", inversedBy="groups")
      * @ORM\JoinColumn(name="schema_id", referencedColumnName="id")
      * @var Schema
      */
     private $schema;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Attribute", mappedBy="group", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $attributes;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="GroupDefinition", inversedBy="groups", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
      * @var GroupDefinition
      */
     private $definition;
-    
+
     /**
      * Constructor
      */
@@ -47,18 +47,18 @@ class Group
     {
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add attributes
      *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @param  \Padam87\AttributeBundle\Entity\Attribute $attributes
      * @return Group
      */
     public function addAttribute($attributes)
     {
         $attributes->setGroup($this);
         $this->attributes[] = $attributes;
-    
+
         return $this;
     }
 
@@ -75,7 +75,7 @@ class Group
     /**
      * Get attributes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAttributes()
     {
@@ -85,7 +85,7 @@ class Group
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -95,20 +95,20 @@ class Group
     /**
      * Set schema
      *
-     * @param \Padam87\AttributeBundle\Entity\Schema $schema
+     * @param  \Padam87\AttributeBundle\Entity\Schema $schema
      * @return Group
      */
     public function setSchema(\Padam87\AttributeBundle\Entity\Schema $schema = null)
     {
         $this->schema = $schema;
-    
+
         return $this;
     }
 
     /**
      * Get schema
      *
-     * @return \Padam87\AttributeBundle\Entity\Schema 
+     * @return \Padam87\AttributeBundle\Entity\Schema
      */
     public function getSchema()
     {
@@ -118,20 +118,20 @@ class Group
     /**
      * Set definition
      *
-     * @param \Padam87\AttributeBundle\Entity\GroupDefinition $definition
+     * @param  \Padam87\AttributeBundle\Entity\GroupDefinition $definition
      * @return Group
      */
     public function setDefinition(\Padam87\AttributeBundle\Entity\GroupDefinition $definition = null)
     {
         $this->definition = $definition;
-    
+
         return $this;
     }
 
     /**
      * Get definition
      *
-     * @return \Padam87\AttributeBundle\Entity\GroupDefinition 
+     * @return \Padam87\AttributeBundle\Entity\GroupDefinition
      */
     public function getDefinition()
     {

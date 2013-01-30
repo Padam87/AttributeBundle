@@ -19,29 +19,29 @@ class Schema extends AbstractSchema
      * @var int
      */
     protected $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-	protected $name;
-    
+    protected $name;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-	protected $class;
-    
+    protected $class;
+
     /**
      * @ORM\OneToMany(targetEntity="Attribute", mappedBy="schema", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $attributes;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Group", mappedBy="schema", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $groups;
-    
+
     /**
      * Constructor
      */
@@ -50,7 +50,7 @@ class Schema extends AbstractSchema
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     public function __toString()
     {
         return $this->name;
@@ -59,7 +59,7 @@ class Schema extends AbstractSchema
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -69,20 +69,20 @@ class Schema extends AbstractSchema
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Schema
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -92,14 +92,14 @@ class Schema extends AbstractSchema
     /**
      * Add attributes
      *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @param  \Padam87\AttributeBundle\Entity\Attribute $attributes
      * @return Schema
      */
     public function addAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
     {
         $attributes->setSchema($this);
         $this->attributes[] = $attributes;
-    
+
         return $this;
     }
 
@@ -116,7 +116,7 @@ class Schema extends AbstractSchema
     /**
      * Get attributes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAttributes()
     {
@@ -126,20 +126,20 @@ class Schema extends AbstractSchema
     /**
      * Set class
      *
-     * @param string $class
+     * @param  string $class
      * @return Schema
      */
     public function setClass($class)
     {
         $this->class = $class;
-    
+
         return $this;
     }
 
     /**
      * Get class
      *
-     * @return string 
+     * @return string
      */
     public function getClass()
     {
@@ -149,14 +149,14 @@ class Schema extends AbstractSchema
     /**
      * Add groups
      *
-     * @param \Padam87\AttributeBundle\Entity\Group $groups
+     * @param  \Padam87\AttributeBundle\Entity\Group $groups
      * @return Schema
      */
     public function addGroup(\Padam87\AttributeBundle\Entity\Group $groups)
     {
         $groups->setSchema($this);
         $this->groups[] = $groups;
-    
+
         return $this;
     }
 
@@ -173,7 +173,7 @@ class Schema extends AbstractSchema
     /**
      * Get groups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroups()
     {

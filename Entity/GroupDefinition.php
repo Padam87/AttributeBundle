@@ -17,13 +17,13 @@ class GroupDefinition
      * @var int
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-	private $name;
-    
+    private $name;
+
     /**
      * @ORM\OneToMany(targetEntity="Group", mappedBy="definition")
      */
@@ -35,11 +35,11 @@ class GroupDefinition
     {
         $this->group = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -49,20 +49,20 @@ class GroupDefinition
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string          $name
      * @return GroupDefinition
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -72,13 +72,13 @@ class GroupDefinition
     /**
      * Add group
      *
-     * @param \Padam87\AttributeBundle\Entity\Group $group
+     * @param  \Padam87\AttributeBundle\Entity\Group $group
      * @return GroupDefinition
      */
     public function addGroup(\Padam87\AttributeBundle\Entity\Group $group)
     {
         $this->group[] = $group;
-    
+
         return $this;
     }
 
@@ -95,7 +95,7 @@ class GroupDefinition
     /**
      * Get group
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroup()
     {

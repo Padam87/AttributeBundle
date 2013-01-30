@@ -20,46 +20,46 @@ class Attribute
      * @var int
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
      */
     private $value;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
      */
     private $unit;
-    
+
     /**
      * @ORM\Column(type="boolean")
-     * @var boolean 
+     * @var boolean
      */
     private $required = FALSE;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Definition", inversedBy="attributes")
      * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
      * @var Definition
      */
     private $definition;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Schema", inversedBy="attributes")
      * @ORM\JoinColumn(name="schema_id", referencedColumnName="id")
      * @var Schema
      */
     private $schema;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Group", inversedBy="attributes")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      * @var Schema
      */
     private $group;
-    
+
     public function __toString()
     {
         return $this->getDefinition()->getName();
@@ -68,7 +68,7 @@ class Attribute
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,20 +78,20 @@ class Attribute
     /**
      * Set value
      *
-     * @param string $value
+     * @param  string    $value
      * @return Attribute
      */
     public function setValue($value)
     {
         $this->value = $value;
-    
+
         return $this;
     }
 
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
@@ -101,20 +101,20 @@ class Attribute
     /**
      * Set required
      *
-     * @param boolean $required
+     * @param  boolean   $required
      * @return Attribute
      */
     public function setRequired($required)
     {
         $this->required = $required;
-    
+
         return $this;
     }
 
     /**
      * Get required
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getRequired()
     {
@@ -124,20 +124,20 @@ class Attribute
     /**
      * Set definition
      *
-     * @param \Padam87\AttributeBundle\Entity\Definition $definition
+     * @param  \Padam87\AttributeBundle\Entity\Definition $definition
      * @return Attribute
      */
     public function setDefinition(\Padam87\AttributeBundle\Entity\Definition $definition = null)
     {
         $this->definition = $definition;
-    
+
         return $this;
     }
 
     /**
      * Get definition
      *
-     * @return \Padam87\AttributeBundle\Entity\Definition 
+     * @return \Padam87\AttributeBundle\Entity\Definition
      */
     public function getDefinition()
     {
@@ -147,20 +147,20 @@ class Attribute
     /**
      * Set schema
      *
-     * @param \Padam87\AttributeBundle\Entity\Schema $schema
+     * @param  \Padam87\AttributeBundle\Entity\Schema $schema
      * @return Attribute
      */
     public function setSchema(\Padam87\AttributeBundle\Entity\Schema $schema = null)
     {
         $this->schema = $schema;
-    
+
         return $this;
     }
 
     /**
      * Get schema
      *
-     * @return \Padam87\AttributeBundle\Entity\Schema 
+     * @return \Padam87\AttributeBundle\Entity\Schema
      */
     public function getSchema()
     {
@@ -170,20 +170,20 @@ class Attribute
     /**
      * Set unit
      *
-     * @param string $unit
+     * @param  string    $unit
      * @return Attribute
      */
     public function setUnit($unit)
     {
         $this->unit = $unit;
-    
+
         return $this;
     }
 
     /**
      * Get unit
      *
-     * @return string 
+     * @return string
      */
     public function getUnit()
     {
@@ -193,20 +193,20 @@ class Attribute
     /**
      * Set group
      *
-     * @param \Padam87\AttributeBundle\Entity\Group $group
+     * @param  \Padam87\AttributeBundle\Entity\Group $group
      * @return Attribute
      */
     public function setGroup(\Padam87\AttributeBundle\Entity\Group $group = null)
     {
         $this->group = $group;
-    
+
         return $this;
     }
 
     /**
      * Get group
      *
-     * @return \Padam87\AttributeBundle\Entity\Group 
+     * @return \Padam87\AttributeBundle\Entity\Group
      */
     public function getGroup()
     {

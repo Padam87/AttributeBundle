@@ -13,7 +13,7 @@ class SchemaListener
     public function __construct()
     {
     }
-		
+
     public function onFlush(OnFlushEventArgs $eventArgs)
     {
         $this->_em = $eventArgs->getEntityManager();
@@ -31,34 +31,34 @@ class SchemaListener
             }
         }
     }
-    
+
     protected function updateEntitySchema($Schema)
     {
         $entities = $this->_em->getRepository($Schema->getClass())->findAll();
-        
+
         $metadata = $this->_em->getClassMetadata($Schema->getClass());
 
         $attributeMapping = $metadata->getAssociationMapping('attributes');
         $groupMapping = $metadata->getAssociationMapping('groups');
-        
-        foreach($entities as $entity) {
+
+        foreach ($entities as $entity) {
             $entity = $Schema->applyTo($entity, $attributeMapping['targetEntity'], $groupMapping['targetEntity']);
-            
+
             foreach ($entity->getAttributes() as $entityAttribute) {
                 $this->_em->persist($entityAttribute);
                 $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($entityAttribute)), $entityAttribute);
             }
-            
+
             foreach ($entity->getGroups() as $entityGroup) {
                 $this->_em->persist($entityGroup);
                 $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($entityGroup)), $entityGroup);
-                
+
                 foreach ($entityGroup->getAttributes() as $groupAttribute) {
                     $this->_em->persist($groupAttribute);
                     $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($groupAttribute)), $groupAttribute);
                 }
             }
-            
+
             $this->_em->persist($entity);
             $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($entity)), $entity);
         }
