@@ -24,6 +24,10 @@ class AttributeType extends AbstractType
         $builder->add('required', 'checkbox', array(
             'required' => false
         ));
+        $builder->add('group', 'entity', array(
+            'class' => 'Padam87\AttributeBundle\Entity\Group',
+            'required' => false
+        ));
     }
 
     public function getName()

@@ -17,24 +17,24 @@ class Option
      * @var int
      */
     protected $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-	protected $name;
-	
+    protected $name;
+
     /**
      * @ORM\ManyToOne(targetEntity="Definition", inversedBy="options")
      * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
      * @var AttributeDefinition
      */
-	protected $definition;
+    protected $definition;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -44,20 +44,20 @@ class Option
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Option
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -67,20 +67,20 @@ class Option
     /**
      * Set definition
      *
-     * @param Padam87\AttributeBundle\Entity\Definition $definition
+     * @param  Padam87\AttributeBundle\Entity\Definition $definition
      * @return Option
      */
     public function setDefinition(\Padam87\AttributeBundle\Entity\Definition $definition = null)
     {
         $this->definition = $definition;
-    
+
         return $this;
     }
 
     /**
      * Get definition
      *
-     * @return Padam87\AttributeBundle\Entity\Definition 
+     * @return Padam87\AttributeBundle\Entity\Definition
      */
     public function getDefinition()
     {

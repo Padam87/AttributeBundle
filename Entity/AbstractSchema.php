@@ -4,29 +4,42 @@ namespace Padam87\AttributeBundle\Entity;
 
 abstract class AbstractSchema
 {
-    public function applyTo($entity, $attributeClass, $groupClass = null)
+    public function applyTo($entity, $attributeClass)
     {
-        foreach ($this->getAttributes() as $Attribute) {
-            $exists = false;
+        foreach ($this->getAttributes() as $attribute) {            
+            $targetAttribute = null;
 
-            foreach ($entity->getAttributes() as $EntityAttribute) {
-                if ($Attribute->getDefinition()->getId() == $EntityAttribute->getDefinition()->getId()) {
+            foreach ($entity->getAttributes() as $entityAttribute) {
+                if ($attribute->getDefinition()->getId() == $entityAttribute->getDefinition()->getId()) {
+                    $targetAttribute = $entityAttribute;
+                    break;
+                }
+            }
+            
+            if ($targetAttribute == null) {
+                $entity->addAttribute($this->transformAttribute($attribute, $attributeClass));
+            }
+            else {
+                $targetAttribute->setUnit($attribute->getUnit());
+                $targetAttribute->setRequired($attribute->getRequired());
+                $targetAttribute->setGroup($attribute->getGroup());
+            }
+        }
+        
+        foreach ($entity->getAttributes() as $entityAttribute) {
+            $exists = false;
+            foreach ($this->getAttributes() as $attribute) {
+                if ($attribute->getDefinition()->getId() == $entityAttribute->getDefinition()->getId()) {
                     $exists = true;
                     break;
                 }
             }
-
-            if (!$exists) {
-                $entity->addAttribute($this->transformAttribute($Attribute, $attributeClass));
+            
+            if ($exists == false) {
+                $entity->removeAttribute($entityAttribute);
             }
         }
-
-        if ($groupClass != null) {
-            foreach ($this->getGroups() as $Group) {
-                $entity->addGroup($this->transformGroup($Group, $attributeClass, $groupClass));
-            }
-        }
-
+        
         return $entity;
     }
 
@@ -37,19 +50,8 @@ abstract class AbstractSchema
         $EntityAttribute->setUnit($Attribute->getUnit());
         $EntityAttribute->setRequired($Attribute->getRequired());
         $EntityAttribute->setDefinition($Attribute->getDefinition());
+        $EntityAttribute->setGroup($Attribute->getGroup());
 
         return $EntityAttribute;
-    }
-
-    protected function transformGroup($Group, $attributeClass, $groupClass)
-    {
-        $EntityGroup = new $groupClass();
-        $EntityGroup->setDefinition($Group->getDefinition());
-
-        foreach ($Group->getAttributes() as $Attribute) {
-            $EntityGroup->addAttribute($this->transformAttribute($Attribute, $attributeClass));
-        }
-
-        return $EntityGroup;
     }
 }

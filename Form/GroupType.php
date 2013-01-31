@@ -9,23 +9,14 @@ class GroupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('definition', new GroupDefinitionType(), array(
-        ));
-        $builder->add('attributes', 'collection', array(
-            'type'          => new AttributeType(),
-            'allow_add'     => true,
-            'allow_delete'  => true,
-            'prototype'     => true,
-            'prototype_name'=> '__groupid__',
-            'by_reference'  => false,
-            'options'       => array(
-            ),
+        $builder->add('name', 'text', array(
+            'required' => false
         ));
     }
 
     public function getName()
     {
-        return 'attribute_group';
+        return 'group';
     }
 
     public function getDefaultOptions(array $options)

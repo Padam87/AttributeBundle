@@ -2,65 +2,51 @@
 
 namespace Padam87\AttributeBundle\Listener;
 
-use Doctrine\ORM\Event\OnFlushEventArgs;
+use JMS\DiExtraBundle\Annotation as DI;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Padam87\AttributeBundle\Entity\Schema;
+use Padam87\AttributeBundle\Entity\SchemaAwareInterface;
+use \Doctrine\ORM\Proxy\Proxy;
 
+/**
+ * @DI\DoctrineListener(
+ *     events = {"postLoad"},
+ *     connection = "default"
+ * )
+ */
 class SchemaListener
 {
     protected $_em;
-    protected $_uow;
-
-    public function __construct()
-    {
-    }
-
-    public function onFlush(OnFlushEventArgs $eventArgs)
+    
+    protected $schemaRepo;
+    
+    public function postLoad(LifecycleEventArgs $eventArgs)
     {
         $this->_em = $eventArgs->getEntityManager();
-        $this->_uow = $this->_em->getUnitOfWork();
-
-        foreach ($this->_uow->getScheduledEntityInsertions() AS $entity) {
-            if ($entity instanceof Schema) {
-                $this->updateEntitySchema($entity);
-            }
+        
+        if ($this->schemaRepo == null) {
+            $this->schemaRepo = $this->_em->getRepository('Padam87AttributeBundle:Schema');
         }
-
-        foreach ($this->_uow->getScheduledEntityUpdates() AS $entity) {
-            if ($entity instanceof Schema) {
-                $this->updateEntitySchema($entity);
+        
+        $entity = $eventArgs->getEntity();
+        
+        if ($entity instanceof SchemaAwareInterface && !$entity instanceof Proxy) {
+            $class = get_class($entity);
+            $metadata = $this->_em->getClassMetadata($class);
+            $attributeMapping = $metadata->getAssociationMapping('attributes');
+            
+            $refl = new \ReflectionClass($attributeMapping['targetEntity']);
+            
+            if ($refl->getParentClass()->getName() == 'Padam87\AttributeBundle\Entity\AbstractAttribute') {
+                $schema = $this->schemaRepo->findOneBy(array(
+                    'class' => $class
+                ));
+                
+                $schema->applyTo($entity, $attributeMapping['targetEntity']);
+                
+                $this->_em->persist($entity);
+                $this->_em->flush($entity);
             }
-        }
-    }
-
-    protected function updateEntitySchema($Schema)
-    {
-        $entities = $this->_em->getRepository($Schema->getClass())->findAll();
-
-        $metadata = $this->_em->getClassMetadata($Schema->getClass());
-
-        $attributeMapping = $metadata->getAssociationMapping('attributes');
-        $groupMapping = $metadata->getAssociationMapping('groups');
-
-        foreach ($entities as $entity) {
-            $entity = $Schema->applyTo($entity, $attributeMapping['targetEntity'], $groupMapping['targetEntity']);
-
-            foreach ($entity->getAttributes() as $entityAttribute) {
-                $this->_em->persist($entityAttribute);
-                $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($entityAttribute)), $entityAttribute);
-            }
-
-            foreach ($entity->getGroups() as $entityGroup) {
-                $this->_em->persist($entityGroup);
-                $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($entityGroup)), $entityGroup);
-
-                foreach ($entityGroup->getAttributes() as $groupAttribute) {
-                    $this->_em->persist($groupAttribute);
-                    $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($groupAttribute)), $groupAttribute);
-                }
-            }
-
-            $this->_em->persist($entity);
-            $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($entity)), $entity);
         }
     }
 }

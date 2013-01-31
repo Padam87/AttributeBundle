@@ -26,8 +26,10 @@ class SchemaController extends Controller
         $this->_em = $this->getDoctrine()->getEntityManager();
 
         $Schema = new Schema();
+        
+        $config = $this->container->getParameter('padam87_attribute');
 
-        $form = $this->get('form.factory')->create(new SchemaListForm($this->container->getParameter('padam87_attribute')), $Schema);
+        $form = $this->get('form.factory')->create(new SchemaListForm($config), $Schema);
         $form->bindRequest($this->get('request'));
 
         $filterFactory = new FilterFactory($this->getDoctrine()->getEntityManager());
@@ -41,6 +43,7 @@ class SchemaController extends Controller
         return array(
             'pagination'	=> $pagination,
             'form'			=> $form->createView(),
+            'classmap'        => array_flip($config['schema']['class']),
         );
     }
 

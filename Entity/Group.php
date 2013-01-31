@@ -7,9 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="attribute_group")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"group" = "Group"})
  */
 class Group
 {
@@ -20,6 +17,12 @@ class Group
      * @var int
      */
     private $id;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     */
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Schema", inversedBy="groups")
@@ -32,14 +35,7 @@ class Group
      * @ORM\OneToMany(targetEntity="Attribute", mappedBy="group", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $attributes;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="GroupDefinition", inversedBy="groups", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
-     * @var GroupDefinition
-     */
-    private $definition;
-
+    
     /**
      * Constructor
      */
@@ -47,18 +43,79 @@ class Group
     {
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
     }
+    
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Group
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set schema
+     *
+     * @param \Padam87\AttributeBundle\Entity\Schema $schema
+     * @return Group
+     */
+    public function setSchema(\Padam87\AttributeBundle\Entity\Schema $schema = null)
+    {
+        $this->schema = $schema;
+    
+        return $this;
+    }
+
+    /**
+     * Get schema
+     *
+     * @return \Padam87\AttributeBundle\Entity\Schema 
+     */
+    public function getSchema()
+    {
+        return $this->schema;
+    }
 
     /**
      * Add attributes
      *
-     * @param  \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
      * @return Group
      */
-    public function addAttribute($attributes)
+    public function addAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
     {
-        $attributes->setGroup($this);
         $this->attributes[] = $attributes;
-
+    
         return $this;
     }
 
@@ -67,7 +124,7 @@ class Group
      *
      * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
      */
-    public function removeAttribute($attributes)
+    public function removeAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
     {
         $this->attributes->removeElement($attributes);
     }
@@ -75,66 +132,10 @@ class Group
     /**
      * Get attributes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getAttributes()
     {
         return $this->attributes;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set schema
-     *
-     * @param  \Padam87\AttributeBundle\Entity\Schema $schema
-     * @return Group
-     */
-    public function setSchema(\Padam87\AttributeBundle\Entity\Schema $schema = null)
-    {
-        $this->schema = $schema;
-
-        return $this;
-    }
-
-    /**
-     * Get schema
-     *
-     * @return \Padam87\AttributeBundle\Entity\Schema
-     */
-    public function getSchema()
-    {
-        return $this->schema;
-    }
-
-    /**
-     * Set definition
-     *
-     * @param  \Padam87\AttributeBundle\Entity\GroupDefinition $definition
-     * @return Group
-     */
-    public function setDefinition(\Padam87\AttributeBundle\Entity\GroupDefinition $definition = null)
-    {
-        $this->definition = $definition;
-
-        return $this;
-    }
-
-    /**
-     * Get definition
-     *
-     * @return \Padam87\AttributeBundle\Entity\GroupDefinition
-     */
-    public function getDefinition()
-    {
-        return $this->definition;
     }
 }
