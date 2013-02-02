@@ -15,7 +15,6 @@ An [EAV](http://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_mod
 		new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         new Padam87\SearchBundle\Padam87SearchBundle(),
         new Padam87\AttributeBundle\Padam87AttributeBundle(),
-		new Netpositive\DiscriminatorMapBundle\NetpositiveDiscriminatorMapBundle(),
     );        
 
 ### 1.3 Routing:
@@ -34,14 +33,16 @@ Insert this to your config.yml.
 	padam87_attribute:
 	    schema:
 	        class:
-	
-	netpositive_discriminator_map:
-	    discriminator_map:
-	        attribute:
-	            entity: Padam87\AttributeBundle\Entity\Attribute
-	            children:
+				niceNameForYourClass: Vendor\Bundle\Entity\EntityName
 
-padam87_attribute.schema.class maps the classes which you assign attributes to.
+	jms_di_extra:
+	    locations:
+	        all_bundles: false
+	        bundles: [Padam87AttributeBundle]
+
+padam87_attribute.schema.class maps the classes which you can assign a schema (set of attributes) to.
+
+jms_di_extra configuration is unnecessary if you have set all_bundles to true
 
 ## 2. Usage
 
@@ -52,12 +53,13 @@ padam87_attribute.schema.class maps the classes which you assign attributes to.
 	namespace Padam87\BaseBundle\Entity;
 	
 	use Doctrine\ORM\Mapping as ORM;
-	use Padam87\AttributeBundle\Entity\Attribute as BaseAttribute;
+	use Padam87\AttributeBundle\Entity\Attribute as AbstractAttribute;
 	
 	/**
 	 * @ORM\Entity()
+ 	 * @ORM\Table(name="product_attribute")
 	 */
-	class Attribute extends BaseAttribute
+	class Attribute extends AbstractAttribute
 	{
 	    /**
 	     * @ORM\ManyToOne(targetEntity="Product", inversedBy="attributes")
@@ -65,29 +67,8 @@ padam87_attribute.schema.class maps the classes which you assign attributes to.
 	     * @var Schema
 	     */
 	    private $product;
-	
-	    /**
-	     * Set product
-	     *
-	     * @param \Padam87\BaseBundle\Entity\Product $product
-	     * @return Attribute
-	     */
-	    public function setProduct(\Padam87\BaseBundle\Entity\Product $product = null)
-	    {
-	        $this->product = $product;
-	    
-	        return $this;
-	    }
-	
-	    /**
-	     * Get product
-	     *
-	     * @return \Padam87\BaseBundle\Entity\Product 
-	     */
-	    public function getProduct()
-	    {
-	        return $this->product;
-	    }
+
+		...
 	}
 
 ### 2.2 Modify the entity which you want to assign attributes to
@@ -98,13 +79,14 @@ padam87_attribute.schema.class maps the classes which you assign attributes to.
 	
 	use Doctrine\ORM\Mapping as ORM;
 	use Symfony\Component\Validator\Constraints as Assert;
+	use Padam87\AttributeBundle\Entity\SchemaAwareInterface;
 
 	/**
 	 * @ORM\Entity()
 	 * @ORM\Table(name="product")
 	 * @ORM\HasLifecycleCallbacks()
 	 */
-	class Product
+	class Product implements SchemaAwareInterface
 	{
 	   ...
 	    
@@ -113,41 +95,19 @@ padam87_attribute.schema.class maps the classes which you assign attributes to.
 	     */
 	    protected $attributes;
 
-		..
+		...
 	}
 
-### 2.3 Add the changes to the config.yml
+### 2.3 Apply the schema
 
-	padam87_attribute:
-	    schema:
-	        class:
-	            product: Padam87\BaseBundle\Entity\Product
-	
-	netpositive_discriminator_map:
-	    discriminator_map:
-	        attribute:
-	            entity: Padam87\AttributeBundle\Entity\Attribute
-	            children:
-	                productAttribute: Padam87\BaseBundle\Entity\Attribute
+Every new entity needs to have the attributes, so instead of just creating a new entity, use the following service:
 
-### 2.4 Apply the schema
+    //$product = new Product();
+    $product = $this->get('attribute.schema')->applyTo(new Product());
 
-Every new entity needs to have the attributes, so we have to clone them from the schema.
+Note: Managed entities will update automatically, no worries there.
 
-    protected function newProduct()
-    {
-        $Product = new Product();
-        
-        $Schema = $this->_em->getRepository('Padam87AttributeBundle:Schema')->findOneBy(array(
-            'class' => get_class($Product)
-        ));
-        
-        $Schema->applyTo($Product, 'Padam87\BaseBundle\Entity\Attribute');
-        
-        return $Product;
-    }
-
-### 2.5 Add attributes to your form
+### 2.4 Add attributes to your form
 
 	$builder->add('attributes', 'collection', array(
 		'type'          => new AttributeType(),
@@ -159,22 +119,22 @@ Every new entity needs to have the attributes, so we have to clone them from the
 		),
 	));
 
-### 2.6 Add attributes to your view
+### 2.5 Add attributes to your view
 
 	{% for attribute in form.attributes %}
         {{ form_widget(attribute) }}
     {% endfor %}
 
-Each Attribute's form widget will be rendered as the definition specifies.
+Each Attribute's form widget will be rendered as the definition specifies (text, select, etc).
 
-### 2.7 Create your Definitions and Schemas
+### 2.6 Create your Definitions and Schemas
 
 /admin/attribute-definition and /admin/attribute-schema
 
-### 2.8  View for Definitions and Schemas
+### 2.7  View for Definitions and Schemas (optional)
 
 Athough the bundle provides a default view, you would propably want to create your own.
-You can do that by adding a folder, ad copying the bundles views here:
+You can do that by adding a folder, and copying the bundles views here:
 
 	app/Resources/Padam87AttributeBundle
 
@@ -183,8 +143,6 @@ OR
 You can create yout own bundle as a child of this one.
 
 ## 3. Depenedncies
-
-[NetpositiveDiscriminatorMapBundle](https://github.com/Netpositive/NetpositiveDiscriminatorMapBundle)
 
 [Padam87SearchBundle](https://github.com/Padam87/SearchBundle)
 
