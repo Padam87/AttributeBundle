@@ -17,7 +17,7 @@ class Group
      * @var int
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
@@ -35,7 +35,7 @@ class Group
      * @ORM\OneToMany(targetEntity="Attribute", mappedBy="group", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $attributes;
-    
+
     /**
      * Constructor
      */
@@ -43,17 +43,16 @@ class Group
     {
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     public function __toString()
     {
         return $this->getName();
     }
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,20 +62,20 @@ class Group
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Group
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -86,20 +85,20 @@ class Group
     /**
      * Set schema
      *
-     * @param \Padam87\AttributeBundle\Entity\Schema $schema
+     * @param  \Padam87\AttributeBundle\Entity\Schema $schema
      * @return Group
      */
     public function setSchema(\Padam87\AttributeBundle\Entity\Schema $schema = null)
     {
         $this->schema = $schema;
-    
+
         return $this;
     }
 
     /**
      * Get schema
      *
-     * @return \Padam87\AttributeBundle\Entity\Schema 
+     * @return \Padam87\AttributeBundle\Entity\Schema
      */
     public function getSchema()
     {
@@ -109,13 +108,13 @@ class Group
     /**
      * Add attributes
      *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @param  \Padam87\AttributeBundle\Entity\Attribute $attributes
      * @return Group
      */
     public function addAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
     {
         $this->attributes[] = $attributes;
-    
+
         return $this;
     }
 
@@ -132,7 +131,7 @@ class Group
     /**
      * Get attributes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAttributes()
     {

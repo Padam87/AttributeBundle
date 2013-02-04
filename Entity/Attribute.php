@@ -22,20 +22,20 @@ class Attribute extends AbstractAttribute
     /**
      * Set schema
      *
-     * @param \Padam87\AttributeBundle\Entity\Schema $schema
+     * @param  \Padam87\AttributeBundle\Entity\Schema $schema
      * @return Attribute
      */
     public function setSchema(\Padam87\AttributeBundle\Entity\Schema $schema = null)
     {
         $this->schema = $schema;
-    
+
         return $this;
     }
 
     /**
      * Get schema
      *
-     * @return \Padam87\AttributeBundle\Entity\Schema 
+     * @return \Padam87\AttributeBundle\Entity\Schema
      */
     public function getSchema()
     {

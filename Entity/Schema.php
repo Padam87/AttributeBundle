@@ -32,13 +32,13 @@ class Schema extends AbstractSchema
      * @var string
      */
     protected $class;
-    
+
     /**
      * @Assert\Valid
      * @ORM\OneToMany(targetEntity="Attribute", mappedBy="schema", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $attributes;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Group", mappedBy="schema", orphanRemoval=true, cascade={"persist", "remove"})
      */
@@ -71,20 +71,20 @@ class Schema extends AbstractSchema
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Schema
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

@@ -7,5 +7,5 @@ namespace Padam87\AttributeBundle\Entity;
  */
 interface SchemaAwareInterface
 {
-    
+
 }

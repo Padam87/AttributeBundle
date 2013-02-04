@@ -6,7 +6,7 @@ abstract class AbstractSchema
 {
     public function applyTo($entity, $attributeClass)
     {
-        foreach ($this->getAttributes() as $attribute) {            
+        foreach ($this->getAttributes() as $attribute) {
             $targetAttribute = null;
 
             foreach ($entity->getAttributes() as $entityAttribute) {
@@ -15,17 +15,16 @@ abstract class AbstractSchema
                     break;
                 }
             }
-            
+
             if ($targetAttribute == null) {
                 $entity->addAttribute($this->transformAttribute($attribute, $attributeClass));
-            }
-            else {
+            } else {
                 $targetAttribute->setUnit($attribute->getUnit());
                 $targetAttribute->setRequired($attribute->getRequired());
                 $targetAttribute->setGroup($attribute->getGroup());
             }
         }
-        
+
         foreach ($entity->getAttributes() as $entityAttribute) {
             $exists = false;
             foreach ($this->getAttributes() as $attribute) {
@@ -34,12 +33,12 @@ abstract class AbstractSchema
                     break;
                 }
             }
-            
+
             if ($exists == false) {
                 $entity->removeAttribute($entityAttribute);
             }
         }
-        
+
         return $entity;
     }
 

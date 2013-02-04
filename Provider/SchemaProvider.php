@@ -8,10 +8,10 @@ use Doctrine\ORM\EntityManager;
 /**
  * @DI\Service("attribute.schema")
  */
-class SchemaServiceProvider
+class SchemaProvider
 {
     private $_em;
-    
+
     private $schemaRepo;
 
     /**
@@ -40,7 +40,7 @@ class SchemaServiceProvider
             $metadata = $this->_em->getClassMetadata($schema->getClass());
 
             $attributeMapping = $metadata->getAssociationMapping('attributes');
-            
+
             $schema->applyTo($entity, $attributeMapping['targetEntity']);
         }
 

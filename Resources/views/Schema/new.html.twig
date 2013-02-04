@@ -7,7 +7,7 @@
         {{ form_row(form._token) }}
         {{ form_row(form.name) }}
         {{ form_row(form.class) }}
-            
+
         <table class="table">
             <caption>{{ form_label(form.groups) }}</caption>
             <thead>
@@ -22,7 +22,7 @@
                     </a>
                 </th>
             </thead>
-            
+
             {% set prototype %}
                 <tr>
                 {% for field in form.groups.vars.prototype %}
@@ -38,7 +38,7 @@
                     </td>
                 </tr>
             {% endset %}
-            
+
             <tbody id="groups" data-prototype="{{ prototype|e }}">
             {% for group in form.groups %}
                 <tr>
@@ -57,7 +57,7 @@
             {% endfor %}
             </tbody>
         </table>
-            
+
         <table class="table">
             <caption>{{ form_label(form.attributes) }}</caption>
             <thead>
@@ -72,7 +72,7 @@
                     </a>
                 </th>
             </thead>
-            
+
             {% set prototype %}
                 <tr>
                 {% for field in form.attributes.vars.prototype %}
@@ -88,7 +88,7 @@
                     </td>
                 </tr>
             {% endset %}
-            
+
             <tbody id="attributes" data-prototype="{{ prototype|e }}">
             {% for attribute in form.attributes %}
                 <tr>

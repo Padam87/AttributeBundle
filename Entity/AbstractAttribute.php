@@ -48,7 +48,7 @@ abstract class AbstractAttribute
      * @var Group
      */
     private $group;
-    
+
     public function __toString()
     {
         return $this->getDefinition()->getName();
@@ -57,7 +57,7 @@ abstract class AbstractAttribute
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -67,20 +67,20 @@ abstract class AbstractAttribute
     /**
      * Set value
      *
-     * @param string $value
+     * @param  string            $value
      * @return AbstractAttribute
      */
     public function setValue($value)
     {
         $this->value = $value;
-    
+
         return $this;
     }
 
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
@@ -90,20 +90,20 @@ abstract class AbstractAttribute
     /**
      * Set unit
      *
-     * @param string $unit
+     * @param  string            $unit
      * @return AbstractAttribute
      */
     public function setUnit($unit)
     {
         $this->unit = $unit;
-    
+
         return $this;
     }
 
     /**
      * Get unit
      *
-     * @return string 
+     * @return string
      */
     public function getUnit()
     {
@@ -113,20 +113,20 @@ abstract class AbstractAttribute
     /**
      * Set required
      *
-     * @param boolean $required
+     * @param  boolean           $required
      * @return AbstractAttribute
      */
     public function setRequired($required)
     {
         $this->required = $required;
-    
+
         return $this;
     }
 
     /**
      * Get required
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getRequired()
     {
@@ -136,20 +136,20 @@ abstract class AbstractAttribute
     /**
      * Set definition
      *
-     * @param \Padam87\AttributeBundle\Entity\Definition $definition
+     * @param  \Padam87\AttributeBundle\Entity\Definition $definition
      * @return AbstractAttribute
      */
     public function setDefinition(\Padam87\AttributeBundle\Entity\Definition $definition = null)
     {
         $this->definition = $definition;
-    
+
         return $this;
     }
 
     /**
      * Get definition
      *
-     * @return \Padam87\AttributeBundle\Entity\Definition 
+     * @return \Padam87\AttributeBundle\Entity\Definition
      */
     public function getDefinition()
     {
@@ -159,20 +159,20 @@ abstract class AbstractAttribute
     /**
      * Set group
      *
-     * @param \Padam87\AttributeBundle\Entity\Group $group
+     * @param  \Padam87\AttributeBundle\Entity\Group $group
      * @return AbstractAttribute
      */
     public function setGroup(\Padam87\AttributeBundle\Entity\Group $group = null)
     {
         $this->group = $group;
-    
+
         return $this;
     }
 
     /**
      * Get group
      *
-     * @return \Padam87\AttributeBundle\Entity\Group 
+     * @return \Padam87\AttributeBundle\Entity\Group
      */
     public function getGroup()
     {

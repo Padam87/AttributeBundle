@@ -26,7 +26,7 @@ class SchemaController extends Controller
         $this->_em = $this->getDoctrine()->getEntityManager();
 
         $Schema = new Schema();
-        
+
         $config = $this->container->getParameter('padam87_attribute');
 
         $form = $this->get('form.factory')->create(new SchemaListForm($config), $Schema);
