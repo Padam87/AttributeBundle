@@ -140,7 +140,7 @@ You can do that by adding a folder, and copying the bundles views here:
 
 OR
 
-You can create yout own bundle as a child of this one.
+You can create your own bundle as a child of this one.
 
 ## 3. Depenedncies
 
