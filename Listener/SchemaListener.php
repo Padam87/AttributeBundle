@@ -41,11 +41,13 @@ class SchemaListener
                 $schema = $this->schemaRepo->findOneBy(array(
                     'className' => $class
                 ));
+                
+                if ($schema != null) {
+                    $schema->applyTo($entity, $attributeMapping['targetEntity']);
 
-                $schema->applyTo($entity, $attributeMapping['targetEntity']);
-
-                $this->_em->persist($entity);
-                $this->_em->flush($entity);
+                    $this->_em->persist($entity);
+                    $this->_em->flush($entity);
+                }
             }
         }
     }
