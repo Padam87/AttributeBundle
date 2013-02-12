@@ -18,7 +18,7 @@ use Padam87\AttributeBundle\Form\SchemaListType as SchemaListForm;
 class SchemaController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/{page}", defaults = { "page" = 1 })
      * @Template()
      */
     public function indexAction($page = 1)
@@ -31,11 +31,13 @@ class SchemaController extends Controller
 
         $form = $this->get('form.factory')->create(new SchemaListForm($config), $Schema);
         $form->bindRequest($this->get('request'));
-
-        $filterFactory = new FilterFactory($this->getDoctrine()->getEntityManager());
+        
+        $qb = $this->get('search')
+                ->createFilter($form->getData(), 's')
+                ->createQueryBuilder('Padam87AttributeBundle:Schema');
 
         $pagination = $this->get('knp_paginator')->paginate(
-            $filterFactory->create($form->getData(), 'p')->createQueryBuilder('Padam87AttributeBundle:Schema'),
+            $qb,
             $page,
             10
         );

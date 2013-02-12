@@ -18,7 +18,7 @@ use Padam87\AttributeBundle\Form\DefinitionListType as DefinitionListForm;
 class DefinitionController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/{page}", defaults = { "page" = 1 })
      * @Template()
      */
     public function indexAction($page = 1)
@@ -29,11 +29,13 @@ class DefinitionController extends Controller
 
         $form = $this->get('form.factory')->create(new DefinitionListForm(), $Definition);
         $form->bindRequest($this->get('request'));
-
-        $filterFactory = new FilterFactory($this->getDoctrine()->getEntityManager());
+        
+        $qb = $this->get('search')
+                ->createFilter($form->getData(), 'ad')
+                ->createQueryBuilder('Padam87AttributeBundle:Definition');
 
         $pagination = $this->get('knp_paginator')->paginate(
-            $filterFactory->create($form->getData(), 'ad')->createQueryBuilder('Padam87AttributeBundle:Definition'),
+            $qb->getQuery(),
             $page,
             10
         );
