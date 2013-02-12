@@ -72,6 +72,9 @@ abstract class AbstractAttribute
      */
     public function setValue($value)
     {
+        if ($this->getDefinition() != NULL && $this->getDefinition()->getType() == 'checkbox') {
+            $value = serialize($value);
+        }
         $this->value = $value;
 
         return $this;
@@ -84,7 +87,9 @@ abstract class AbstractAttribute
      */
     public function getValue()
     {
-        return $this->value;
+        return ($this->getDefinition() != NULL && $this->getDefinition()->getType() == 'checkbox' && $this->value)
+            ? @unserialize($this->value)
+            : $this->value;
     }
 
     /**

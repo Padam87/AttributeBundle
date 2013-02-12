@@ -3,10 +3,12 @@
 namespace Padam87\AttributeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="attribute_group")
+ * @UniqueEntity({"name", "schema"})
  */
 class Group
 {

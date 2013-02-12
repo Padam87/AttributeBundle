@@ -39,7 +39,7 @@ class SchemaListener
 
             if ($refl->getParentClass()->getName() == 'Padam87\AttributeBundle\Entity\AbstractAttribute') {
                 $schema = $this->schemaRepo->findOneBy(array(
-                    'class' => $class
+                    'className' => $class
                 ));
 
                 $schema->applyTo($entity, $attributeMapping['targetEntity']);

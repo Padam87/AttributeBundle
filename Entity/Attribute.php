@@ -8,7 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="attribute_schema_attribute")
- * @UniqueEntity({"definition", "schema"})
+ * @UniqueEntity({"definition", "schema", "group"})
  */
 class Attribute extends AbstractAttribute
 {

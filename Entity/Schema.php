@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="attribute_schema")
- * @UniqueEntity("class")
+ * @UniqueEntity("className")
  */
 class Schema extends AbstractSchema
 {
@@ -31,7 +31,7 @@ class Schema extends AbstractSchema
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    protected $class;
+    protected $className;
 
     /**
      * @Assert\Valid
@@ -56,6 +56,18 @@ class Schema extends AbstractSchema
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
+    }
+
+    public function __get($name)
+    {
+        $getter = "get" . ucfirst($name);
+
+        return $this->$getter();
     }
 
     /**
@@ -126,26 +138,26 @@ class Schema extends AbstractSchema
     }
 
     /**
-     * Set class
+     * Set className
      *
-     * @param  string $class
+     * @param  string $className
      * @return Schema
      */
-    public function setClass($class)
+    public function setClassName($className)
     {
-        $this->class = $class;
+        $this->className = $className;
 
         return $this;
     }
 
     /**
-     * Get class
+     * Get className
      *
      * @return string
      */
-    public function getClass()
+    public function getClassName()
     {
-        return $this->class;
+        return $this->className;
     }
 
     /**

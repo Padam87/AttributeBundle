@@ -33,11 +33,11 @@ class SchemaProvider
     public function applyTo($entity)
     {
         $schema = $this->schemaRepo->findOneBy(array(
-            'class' => get_class($entity)
+            'className' => get_class($entity)
         ));
 
         if ($schema != null) {
-            $metadata = $this->_em->getClassMetadata($schema->getClass());
+            $metadata = $this->_em->getClassMetadata($schema->getClassName());
 
             $attributeMapping = $metadata->getAssociationMapping('attributes');
 

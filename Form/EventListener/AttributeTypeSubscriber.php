@@ -52,6 +52,8 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
                 foreach ($options as $option) {
                     $params['choices'][$option->getName()] = $option->getName();
                 }
+                
+                $type = 'choice';
             }
 
             if ($data->getRequired() == true) {

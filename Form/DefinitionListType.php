@@ -10,9 +10,19 @@ class DefinitionListType extends DefinitionType
     {
         parent::buildForm($builder, $options);
 
-        $builder->get('name')->setRequired(false);
-        $builder->get('description')->setRequired(false);
-        $builder->get('type')->setRequired(false);
+        $builder->add('name', 'text', array(
+            'required' => false
+        ));
+        $builder->add('type', 'choice', array(
+            'choices'		=> array(
+                'text'					=> 'text',
+                'textarea'				=> 'textarea',
+                'choice'				=> 'select',
+                'checkbox'				=> 'checkbox',
+                'radio'					=> 'radio',
+            ),
+            'required' => false
+        ));
         $builder->remove('options');
     }
 }

@@ -18,7 +18,7 @@ class SchemaType extends AbstractType
     {
         $builder->add('name', 'text', array(
         ));
-        $builder->add('class', 'choice', array(
+        $builder->add('className', 'choice', array(
             'choices' => array_flip($this->config['class'])
         ));
         $builder->add('attributes', 'collection', array(

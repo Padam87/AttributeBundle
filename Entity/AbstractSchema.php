@@ -10,7 +10,8 @@ abstract class AbstractSchema
             $targetAttribute = null;
 
             foreach ($entity->getAttributes() as $entityAttribute) {
-                if ($attribute->getDefinition()->getId() == $entityAttribute->getDefinition()->getId()) {
+                if ($attribute->getDefinition()->getId() == $entityAttribute->getDefinition()->getId() &&
+                        $attribute->getGroup() == $entityAttribute->getGroup() ) {
                     $targetAttribute = $entityAttribute;
                     break;
                 }
@@ -28,7 +29,8 @@ abstract class AbstractSchema
         foreach ($entity->getAttributes() as $entityAttribute) {
             $exists = false;
             foreach ($this->getAttributes() as $attribute) {
-                if ($attribute->getDefinition()->getId() == $entityAttribute->getDefinition()->getId()) {
+                if ($attribute->getDefinition()->getId() == $entityAttribute->getDefinition()->getId() &&
+                        $attribute->getGroup() == $entityAttribute->getGroup() ) {
                     $exists = true;
                     break;
                 }

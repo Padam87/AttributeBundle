@@ -61,6 +61,18 @@ class Definition
         return $this->name;
     }
 
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
+    }
+
+    public function __get($name)
+    {
+        $getter = "get" . ucfirst($name);
+
+        return $this->$getter();
+    }
+
     /**
      * Get id
      *
