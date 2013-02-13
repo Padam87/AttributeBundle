@@ -4,13 +4,14 @@ namespace Padam87\AttributeBundle\Listener;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use Padam87\AttributeBundle\Entity\Schema;
 use Padam87\AttributeBundle\Entity\SchemaAwareInterface;
 use \Doctrine\ORM\Proxy\Proxy;
 
 /**
  * @DI\DoctrineListener(
- *     events = {"postLoad"},
+ *     events = {"onFlush"},
  *     connection = "default"
  * )
  */
@@ -20,35 +21,54 @@ class SchemaListener
 
     protected $schemaRepo;
 
-    public function postLoad(LifecycleEventArgs $eventArgs)
+    public function onFlush(OnFlushEventArgs $eventArgs)
     {
         $this->_em = $eventArgs->getEntityManager();
+        $this->_uow = $this->_em->getUnitOfWork();
 
-        if ($this->schemaRepo == null) {
-            $this->schemaRepo = $this->_em->getRepository('Padam87AttributeBundle:Schema');
-        }
-
-        $entity = $eventArgs->getEntity();
-
-        if ($entity instanceof SchemaAwareInterface && !$entity instanceof Proxy) {
-            $class = get_class($entity);
-            $metadata = $this->_em->getClassMetadata($class);
-            $attributeMapping = $metadata->getAssociationMapping('attributes');
-
-            $refl = new \ReflectionClass($attributeMapping['targetEntity']);
-
-            if ($refl->getParentClass()->getName() == 'Padam87\AttributeBundle\Entity\AbstractAttribute') {
-                $schema = $this->schemaRepo->findOneBy(array(
-                    'className' => $class
-                ));
-                
-                if ($schema != null) {
-                    $schema->applyTo($entity, $attributeMapping['targetEntity']);
-
-                    $this->_em->persist($entity);
-                    $this->_em->flush($entity);
-                }
+        foreach ($this->_uow->getScheduledEntityInsertions() AS $entity) {
+            if ($entity instanceof Schema) {
+                $this->orderSchema($entity);
             }
         }
+
+        foreach ($this->_uow->getScheduledEntityUpdates() AS $entity) {
+            if ($entity instanceof Schema) {
+                $this->orderSchema($entity);
+            }
+        }
+    }
+    
+    protected function orderSchema($schema)
+    {
+        $grouped = array(
+            0 => array()
+        );
+        
+        foreach ($schema->getAttributes() as $attribute) {
+            $group = $attribute->getGroup() === NULL ? 0 : $attribute->getGroup()->getId();
+            
+            if (!isset($grouped[$group])) {
+                $grouped[$group] = array();
+            }
+            
+            $grouped[$group][] = $attribute;
+        }
+        
+        $i = 1;
+        
+        foreach ($grouped as $group) {
+            foreach ($group as $attribute) {
+                $attribute->setOrderIndex($i);
+                
+                $this->_em->persist($attribute);
+                $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($attribute)), $attribute);
+        
+                $i++;
+            }
+        }
+        
+        $this->_em->persist($schema);
+        $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($schema)), $schema);
     }
 }

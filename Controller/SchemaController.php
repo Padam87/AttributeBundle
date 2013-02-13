@@ -13,7 +13,7 @@ use Padam87\AttributeBundle\Form\SchemaType as SchemaForm;
 use Padam87\AttributeBundle\Form\SchemaListType as SchemaListForm;
 
 /**
- * @Route("/attribute-schema")
+ * @Route("/attribute-schemas")
  */
 class SchemaController extends Controller
 {
@@ -66,7 +66,8 @@ class SchemaController extends Controller
 
             if ($form->isValid()) {
                 $Schema = $form->getData();
-
+                $Schema->setUpdatedAt(new \DateTime());
+                
                 $this->_em->persist($Schema);
                 $this->_em->flush();
 
@@ -102,6 +103,7 @@ class SchemaController extends Controller
 
             if ($form->isValid()) {
                 $Schema = $form->getData();
+                $Schema->setUpdatedAt(new \DateTime());
 
                 $this->_em->persist($Schema);
                 $this->_em->flush();

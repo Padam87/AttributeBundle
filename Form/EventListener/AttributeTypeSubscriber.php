@@ -31,11 +31,19 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($data->getDefinition() != null) {
-            $params = array();
-
-            $type = $data->getDefinition()->getType();
-            $options = $data->getDefinition()->getOptions()->toArray();
+        if ($data->getAttribute()->getDefinition() != null) {
+            $attribute = $data->getAttribute();
+            $group = $attribute->getGroup() ;
+            $definition = $attribute->getDefinition();
+            
+            $type = $definition->getType();
+            $options = $definition->getOptions()->toArray();
+            
+            $params = array(
+                'attr' => array(
+                    
+                )
+            );
 
             if ($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
 
@@ -56,15 +64,21 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
                 $type = 'choice';
             }
 
-            if ($data->getRequired() == true) {
+            if ($attribute->getRequired() == true) {
                 $params['required'] = true;
             } else {
                 $params['required'] = false;
             }
 
-            $params['label'] = $data->getDefinition()->getName();
+            $params['label'] = $definition->getName();
+            
+            if ($group != NULL) {
+                $params['attr']['group'] = $group->getName();
+            }
 
-            if($type == 'text') $params['attr']['addon'] = $data->getUnit();
+            if($type == 'text') {
+                $params['attr']['addon'] = $attribute->getUnit();
+            }
 
             $form->add($this->factory->createNamed('value', $type, $data->getValue(), $params));
         }

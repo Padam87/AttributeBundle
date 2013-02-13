@@ -22,7 +22,7 @@ class SchemaType extends AbstractType
             'choices' => array_flip($this->config['class'])
         ));
         $builder->add('attributes', 'collection', array(
-            'type'          => new SchemaAttributeType(),
+            'type'          => new AttributeType(),
             'allow_add'     => true,
             'allow_delete'  => true,
             'prototype'     => true,

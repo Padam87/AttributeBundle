@@ -13,7 +13,7 @@ use Padam87\AttributeBundle\Form\DefinitionType as DefinitionForm;
 use Padam87\AttributeBundle\Form\DefinitionListType as DefinitionListForm;
 
 /**
- * @Route("/attribute-definition")
+ * @Route("/attribute-definitions")
  */
 class DefinitionController extends Controller
 {

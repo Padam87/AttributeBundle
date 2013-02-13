@@ -1,0 +1,89 @@
+<?php
+
+namespace Padam87\AttributeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * @ORM\MappedSuperclass()
+ */
+class Value
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
+     */
+    private $id;
+    
+    /**
+     * @ORM\Column(type="integer")
+     * @var integer
+     */
+    private $value;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Attribute", inversedBy="attributes")
+     * @ORM\JoinColumn(name="attribute_id", referencedColumnName="id")
+     * @var Schema
+     */
+    private $attribute;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set value
+     *
+     * @param integer $value
+     * @return Value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return integer 
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set attribute
+     *
+     * @param \Padam87\AttributeBundle\Entity\Attribute $attribute
+     * @return Value
+     */
+    public function setAttribute(\Padam87\AttributeBundle\Entity\Attribute $attribute = null)
+    {
+        $this->attribute = $attribute;
+    
+        return $this;
+    }
+
+    /**
+     * Get attribute
+     *
+     * @return \Padam87\AttributeBundle\Entity\Attribute 
+     */
+    public function getAttribute()
+    {
+        return $this->attribute;
+    }
+}
