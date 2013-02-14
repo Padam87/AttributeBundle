@@ -61,7 +61,7 @@ class Attribute
 
     public function __toString()
     {
-        return $this->getDefinition()->getName();
+        return ($this->getGroup() != NULL ? $this->getGroup()->getName() . " - " : "") . $this->getDefinition()->getName();
     }
 
     /**

@@ -73,7 +73,7 @@ class Value
                 $this->getAttribute()->getDefinition()->getType() == 'checkbox') {
             
             if ($this->value) {
-                $value = @unserialize($value);
+                $value = @unserialize($this->value);
             }
             else {
                 $value = array();

@@ -9,10 +9,28 @@ use Symfony\Component\Form\FormEvents;
 class AttributeTypeSubscriber implements EventSubscriberInterface
 {
     private $factory;
-
-    public function __construct(FormFactoryInterface $factory)
+    private $options;
+    
+    private $defaultOptions = array(
+        'allow_expanded' => true,
+        'all_multiple' => false
+    );
+    
+    public function __construct(FormFactoryInterface $factory, $options = array())
     {
         $this->factory = $factory;
+        $this->options = $options;
+    }
+    
+    public function getOption($name)
+    {
+        if (!isset($this->options[$name])) {
+            $value = $this->defaultOptions[$name];
+        } else {
+            $value = $this->options[$name];
+        }
+        
+        return $value;
     }
 
     public static function getSubscribedEvents()
@@ -46,13 +64,18 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             );
 
             if ($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
-
-                if ($type == 'radio') {
+                if (($type == 'checkbox' || $type == 'radio') && $this->getOption('allow_expanded') == true) {
                     $params['expanded'] = true;
-                    $params['multiple'] = false;
-                } elseif ($type == 'checkbox') {
-                    $params['expanded'] = true;
+                }
+                
+                if ($this->getOption('all_multiple')) {
                     $params['multiple'] = true;
+                } else {
+                    if ($type == 'radio') {
+                        $params['multiple'] = false;
+                    } elseif ($type == 'checkbox') {
+                        $params['multiple'] = true;
+                    }
                 }
 
                 $params['choices'] = array();
@@ -75,11 +98,11 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             if ($group != NULL) {
                 $params['attr']['group'] = $group->getName();
             }
-
-            if($type == 'text') {
-                $params['attr']['addon'] = $attribute->getUnit();
+            
+            if ($attribute->getUnit() != "") {
+                $params['attr']['unit'] = $attribute->getUnit();
             }
-
+            
             $form->add($this->factory->createNamed('value', $type, $data->getValue(), $params));
         }
     }
