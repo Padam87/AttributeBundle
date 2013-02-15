@@ -4,14 +4,13 @@ namespace Padam87\AttributeBundle\Listener;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\OnFlushEventArgs;
 use Padam87\AttributeBundle\Entity\Schema;
 use Padam87\AttributeBundle\Entity\SchemaAwareInterface;
 use \Doctrine\ORM\Proxy\Proxy;
 
 /**
  * @DI\DoctrineListener(
- *     events = {"onFlush"},
+ *     events = {"postPersist", "postUpdate"},
  *     connection = "default"
  * )
  */
@@ -21,21 +20,23 @@ class SchemaListener
 
     protected $schemaRepo;
 
-    public function onFlush(OnFlushEventArgs $eventArgs)
+    public function postPersist(LifecycleEventArgs $eventArgs)
     {
+        $entity = $eventArgs->getEntity();
         $this->_em = $eventArgs->getEntityManager();
-        $this->_uow = $this->_em->getUnitOfWork();
 
-        foreach ($this->_uow->getScheduledEntityInsertions() AS $entity) {
-            if ($entity instanceof Schema) {
-                $this->orderSchema($entity);
-            }
+        if ($entity instanceof Schema) {
+            $this->orderSchema($entity);
         }
+    }
 
-        foreach ($this->_uow->getScheduledEntityUpdates() AS $entity) {
-            if ($entity instanceof Schema) {
-                $this->orderSchema($entity);
-            }
+    public function postUpdate(LifecycleEventArgs $eventArgs)
+    {
+        $entity = $eventArgs->getEntity();
+        $this->_em = $eventArgs->getEntityManager();
+
+        if ($entity instanceof Schema) {
+            $this->orderSchema($entity);
         }
     }
     
@@ -62,13 +63,13 @@ class SchemaListener
                 $attribute->setOrderIndex($i);
                 
                 $this->_em->persist($attribute);
-                $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($attribute)), $attribute);
+                $this->_em->flush($attribute);
         
                 $i++;
             }
         }
         
         $this->_em->persist($schema);
-        $this->_uow->computeChangeSet($this->_em->getClassMetadata(get_class($schema)), $schema);
+        $this->_em->flush($schema);
     }
 }
