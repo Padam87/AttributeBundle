@@ -13,12 +13,12 @@ use Padam87\AttributeBundle\Form\DefinitionType as DefinitionForm;
 use Padam87\AttributeBundle\Form\DefinitionListType as DefinitionListForm;
 
 /**
- * @Route("/attribute-definitions")
+ * @Route("/attribute-definition")
  */
 class DefinitionController extends Controller
 {
     /**
-     * @Route("/{page}", defaults = { "page" = 1 })
+     * @Route("/{page}", defaults = { "page" = 1 }, requirements = { "page" = "[^new]" })
      * @Template()
      */
     public function indexAction($page = 1)

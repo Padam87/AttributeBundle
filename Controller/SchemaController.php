@@ -13,12 +13,12 @@ use Padam87\AttributeBundle\Form\SchemaType as SchemaForm;
 use Padam87\AttributeBundle\Form\SchemaListType as SchemaListForm;
 
 /**
- * @Route("/attribute-schemas")
+ * @Route("/attribute-schema")
  */
 class SchemaController extends Controller
 {
     /**
-     * @Route("/{page}", defaults = { "page" = 1 })
+     * @Route("/{page}", defaults = { "page" = 1 }, requirements = { "page" = "[^new]" })
      * @Template()
      */
     public function indexAction($page = 1)
