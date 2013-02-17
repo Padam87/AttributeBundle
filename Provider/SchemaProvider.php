@@ -39,43 +39,43 @@ class SchemaProvider
         if ($schema != null) {
             $metadata = $this->_em->getClassMetadata($schema->getClassName());
             $attributeMapping = $metadata->getAssociationMapping('attributeValues');
-            
+
             foreach ($schema->getAttributes() as $attribute) {
                 $exists = false;
-                
+
                 foreach ($entity->getAttributeValues() as $value) {
                     if ($value->getAttribute()->getId() == $attribute->getId()) {
                         $exists = true;
                         break;
                     }
                 }
-                
+
                 if (!$exists) {
                     $value = new $attributeMapping['targetEntity'];
                     $value->setAttribute($attribute);
-                    
+
                     $entity->addAttributeValue($value);
                 }
             }
         }
-        
+
         $values = $entity->getAttributeValues();
         $count = $values->count() - 1;
-        
+
         for ($i = 1; $i <= $count - 1; $i++) {
             for ($j = $i + 1; $j <= $count; $j++) {
                 $iIndex = $values->get($i)->getAttribute()->getOrderIndex();
                 $jIndex = $values->get($j)->getAttribute()->getOrderIndex();
-                
+
                 if ($iIndex > $jIndex) {
                     $iValue = $values->get($i);
-                    
+
                     $values->set($i, $values->get($j));
                     $values->set($j, $iValue);
                 }
             }
         }
-        
+
         if ($this->_em->getUnitOfWork()->getEntityState($entity) == \Doctrine\ORM\UnitOfWork::STATE_MANAGED) {
             $this->_em->persist($entity);
             $this->_em->flush($entity);

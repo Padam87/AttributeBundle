@@ -32,7 +32,7 @@ class Schema
      * @var string
      */
     protected $className;
-    
+
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var DateTime
@@ -205,20 +205,20 @@ class Schema
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return Schema
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {

@@ -10,18 +10,18 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
 {
     private $factory;
     private $options;
-    
+
     private $defaultOptions = array(
         'allow_expanded' => true,
         'all_multiple' => false
     );
-    
+
     public function __construct(FormFactoryInterface $factory, $options = array())
     {
         $this->factory = $factory;
         $this->options = $options;
     }
-    
+
     public function getOption($name)
     {
         if (!isset($this->options[$name])) {
@@ -29,7 +29,7 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
         } else {
             $value = $this->options[$name];
         }
-        
+
         return $value;
     }
 
@@ -53,13 +53,13 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             $attribute = $data->getAttribute();
             $group = $attribute->getGroup() ;
             $definition = $attribute->getDefinition();
-            
+
             $type = $definition->getType();
             $options = $definition->getOptions()->toArray();
-            
+
             $params = array(
                 'attr' => array(
-                    
+
                 )
             );
 
@@ -67,7 +67,7 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
                 if (($type == 'checkbox' || $type == 'radio') && $this->getOption('allow_expanded') == true) {
                     $params['expanded'] = true;
                 }
-                
+
                 if ($this->getOption('all_multiple')) {
                     $params['multiple'] = true;
                 } else {
@@ -83,7 +83,7 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
                 foreach ($options as $option) {
                     $params['choices'][$option->getName()] = $option->getName();
                 }
-                
+
                 $type = 'choice';
             }
 
@@ -94,15 +94,15 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             }
 
             $params['label'] = $definition->getName();
-            
+
             if ($group != NULL) {
                 $params['attr']['group'] = $group->getName();
             }
-            
+
             if ($attribute->getUnit() != "") {
                 $params['attr']['unit'] = $attribute->getUnit();
             }
-            
+
             $form->add($this->factory->createNamed('value', $type, $data->getValue(), $params));
         }
     }

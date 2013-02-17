@@ -6,8 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Padam87\SearchBundle\Filter\FilterFactory;
-
 use Padam87\AttributeBundle\Entity\Definition;
 use Padam87\AttributeBundle\Form\DefinitionType as DefinitionForm;
 use Padam87\AttributeBundle\Form\DefinitionListType as DefinitionListForm;
@@ -29,7 +27,7 @@ class DefinitionController extends Controller
 
         $form = $this->get('form.factory')->create(new DefinitionListForm(), $Definition);
         $form->bindRequest($this->get('request'));
-        
+
         $qb = $this->get('search')
                 ->createFilter($form->getData(), 'ad')
                 ->createQueryBuilder('Padam87AttributeBundle:Definition');

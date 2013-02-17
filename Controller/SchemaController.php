@@ -6,8 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Padam87\SearchBundle\Filter\FilterFactory;
-
 use Padam87\AttributeBundle\Entity\Schema;
 use Padam87\AttributeBundle\Form\SchemaType as SchemaForm;
 use Padam87\AttributeBundle\Form\SchemaListType as SchemaListForm;
@@ -31,7 +29,7 @@ class SchemaController extends Controller
 
         $form = $this->get('form.factory')->create(new SchemaListForm($config), $Schema);
         $form->bindRequest($this->get('request'));
-        
+
         $qb = $this->get('search')
                 ->createFilter($form->getData(), 's')
                 ->createQueryBuilder('Padam87AttributeBundle:Schema');
@@ -67,7 +65,7 @@ class SchemaController extends Controller
             if ($form->isValid()) {
                 $Schema = $form->getData();
                 $Schema->setUpdatedAt(new \DateTime());
-                
+
                 $this->_em->persist($Schema);
                 $this->_em->flush();
 

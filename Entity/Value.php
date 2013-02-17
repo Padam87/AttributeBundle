@@ -3,7 +3,6 @@
 namespace Padam87\AttributeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\MappedSuperclass()
@@ -17,13 +16,13 @@ class Value
      * @var int
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="text", nullable=true)
      * @var integer
      */
     private $value;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Attribute", inversedBy="attributes")
      * @ORM\JoinColumn(name="attribute_id", referencedColumnName="id")
@@ -34,7 +33,7 @@ class Value
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -52,10 +51,10 @@ class Value
         if ($this->getAttribute() != NULL &&
                 $this->getAttribute()->getDefinition() != NULL &&
                 $this->getAttribute()->getDefinition()->getType() == 'checkbox') {
-            
+
             $value = serialize($value);
         }
-        
+
         $this->value = $value;
 
         return $this;
@@ -71,39 +70,37 @@ class Value
         if ($this->getAttribute() != NULL &&
                 $this->getAttribute()->getDefinition() != NULL &&
                 $this->getAttribute()->getDefinition()->getType() == 'checkbox') {
-            
+
             if ($this->value) {
                 $value = @unserialize($this->value);
-            }
-            else {
+            } else {
                 $value = array();
             }
-            
-        }
-        else {
+
+        } else {
             $value = $this->value;
         }
-        
+
         return $value;
     }
 
     /**
      * Set attribute
      *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attribute
+     * @param  \Padam87\AttributeBundle\Entity\Attribute $attribute
      * @return Value
      */
     public function setAttribute(\Padam87\AttributeBundle\Entity\Attribute $attribute = null)
     {
         $this->attribute = $attribute;
-    
+
         return $this;
     }
 
     /**
      * Get attribute
      *
-     * @return \Padam87\AttributeBundle\Entity\Attribute 
+     * @return \Padam87\AttributeBundle\Entity\Attribute
      */
     public function getAttribute()
     {
