@@ -3,38 +3,46 @@
 namespace Padam87\AttributeBundle\Listener;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use Padam87\AttributeBundle\Entity\Schema;
 
 /**
  * @DI\DoctrineListener(
- *     events = {"postPersist", "postUpdate"},
+ *     events = {"onFlush", "postFlush"},
  *     connection = "default"
  * )
  */
 class SchemaListener
 {
     protected $_em;
+    
+    protected $schema = null;
 
-    protected $schemaRepo;
-
-    public function postPersist(LifecycleEventArgs $eventArgs)
+    public function onFlush(OnFlushEventArgs $eventArgs)
     {
-        $entity = $eventArgs->getEntity();
         $this->_em = $eventArgs->getEntityManager();
-
-        if ($entity instanceof Schema) {
-            $this->orderSchema($entity);
+        $this->_uow = $this->_em->getUnitOfWork();
+        
+        foreach ($this->_uow->getScheduledEntityInsertions() as $entity) {
+            if ($entity instanceof Schema) {
+                $this->schema = $entity;
+            }
+        }
+        
+        foreach ($this->_uow->getScheduledEntityUpdates() as $entity) {
+            if ($entity instanceof Schema) {
+                $this->schema = $entity;
+            }
         }
     }
 
-    public function postUpdate(LifecycleEventArgs $eventArgs)
+    public function postFlush(PostFlushEventArgs $eventArgs)
     {
-        $entity = $eventArgs->getEntity();
         $this->_em = $eventArgs->getEntityManager();
 
-        if ($entity instanceof Schema) {
-            $this->orderSchema($entity);
+        if ($this->schema != null) {
+            $this->orderSchema($this->schema);
         }
     }
 
@@ -45,7 +53,7 @@ class SchemaListener
         );
 
         foreach ($schema->getAttributes() as $attribute) {
-            $group = $attribute->getGroup() === NULL ? 0 : $attribute->getGroup()->getId();
+            $group = $attribute->getGroup() === null ? 0 : $attribute->getGroup()->getId();
 
             if (!isset($grouped[$group])) {
                 $grouped[$group] = array();
