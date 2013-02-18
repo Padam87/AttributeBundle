@@ -16,7 +16,7 @@ use Padam87\AttributeBundle\Form\DefinitionListType as DefinitionListForm;
 class DefinitionController extends Controller
 {
     /**
-     * @Route("/{page}", defaults = { "page" = 1 }, requirements = { "page" = "[^new]" })
+     * @Route("/{page}", defaults = { "page" = 1 }, requirements = { "page" = "\d+" })
      * @Template()
      */
     public function indexAction($page = 1)
