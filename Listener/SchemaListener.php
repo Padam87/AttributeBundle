@@ -77,5 +77,7 @@ class SchemaListener
 
         $this->_em->persist($schema);
         $this->_em->flush($schema);
+        
+        $this->schema = null;
     }
 }
