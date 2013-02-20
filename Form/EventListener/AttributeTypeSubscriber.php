@@ -100,7 +100,7 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             }
 
             if ($attribute->getUnit() != "") {
-                $params['attr']['unit'] = $attribute->getUnit();
+                $params['label'] .= ' (' . $attribute->getUnit() . ')';
             }
 
             $form->add($this->factory->createNamed('value', $type, $data->getValue(), $params));
