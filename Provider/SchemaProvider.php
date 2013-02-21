@@ -24,6 +24,18 @@ class SchemaProvider
         $this->_em = $em;
         $this->schemaRepo = $em->getRepository('Padam87AttributeBundle:Schema');
     }
+    
+    /**
+     * Finds the schema for the given entity
+     * 
+     * @return Schema
+     */
+    public function get($entity)
+    {
+        return $this->schemaRepo->findOneBy(array(
+            'className' => get_class($entity)
+        ));
+    }
 
     /**
      * Applies the matching schema to an entity
@@ -32,9 +44,7 @@ class SchemaProvider
      */
     public function applyTo($entity)
     {
-        $schema = $this->schemaRepo->findOneBy(array(
-            'className' => get_class($entity)
-        ));
+        $schema = $this->get($entity);
 
         if ($schema != null) {
             $metadata = $this->_em->getClassMetadata($schema->getClassName());
