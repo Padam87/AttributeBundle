@@ -93,4 +93,36 @@ class SchemaProvider
 
         return $entity;
     }
+
+    public function orderSchema($schema)
+    {
+        $grouped = array(
+            0 => array()
+        );
+
+        foreach ($schema->getAttributes() as $attribute) {
+            $group = $attribute->getGroup() === null ? 0 : $attribute->getGroup()->getId();
+
+            if (!isset($grouped[$group])) {
+                $grouped[$group] = array();
+            }
+
+            $grouped[$group][] = $attribute;
+        }
+
+        $i = 1;
+
+        foreach ($grouped as $group) {
+            foreach ($group as $attribute) {
+                $attribute->setOrderIndex($i);
+
+                $this->_em->persist($attribute);
+                $this->_em->flush($attribute);
+                $i++;
+            }
+        }
+
+        $this->_em->persist($schema);
+        $this->_em->flush($schema);
+    }
 }

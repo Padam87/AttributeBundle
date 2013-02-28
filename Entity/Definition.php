@@ -43,7 +43,7 @@ class Definition
     private $options;
 
     /**
-     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="definition")
+     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="definition", cascade={"persist", "remove"})
      */
     protected $attributes;
 

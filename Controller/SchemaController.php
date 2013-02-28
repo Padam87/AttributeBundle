@@ -105,6 +105,8 @@ class SchemaController extends Controller
 
                 $this->_em->persist($Schema);
                 $this->_em->flush();
+                
+                $this->get('attribute.schema')->orderSchema($Schema);
 
                 $this->get('session')->setFlash('success', $this->get('translator')->trans('messages.save.successful'));
 
