@@ -30,15 +30,6 @@ class SchemaType extends AbstractType
             'options'       => array(
             ),
         ));
-        $builder->add('groups', 'collection', array(
-            'type'          => new GroupType(),
-            'allow_add'     => true,
-            'allow_delete'  => true,
-            'prototype'     => true,
-            'by_reference'  => false,
-            'options'       => array(
-            ),
-        ));
     }
 
     public function getName()

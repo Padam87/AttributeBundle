@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Padam87\AttributeBundle\Entity\Schema;
 use Padam87\AttributeBundle\Form\SchemaType as SchemaForm;
 use Padam87\AttributeBundle\Form\SchemaListType as SchemaListForm;
+use Padam87\AttributeBundle\Form\SchemaGroupType as SchemaGroupForm;
 
 /**
  * @Route("/attribute-schema")
@@ -114,6 +115,55 @@ class SchemaController extends Controller
             } else {
                 $this->get('session')->setFlash('error', $this->get('translator')->trans('messages.save.unsuccessful'));
             }
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'Schema' => $Schema
+        );
+    }
+
+    /**
+     * @Route("/group/edit/{id}")
+     * @Template()
+     */
+    public function editGroupAction($id)
+    {
+        $this->_em = $this->getDoctrine()->getEntityManager();
+
+        $Schema = $this->_em->find('Padam87AttributeBundle:Schema', $id);
+
+        $form = $this->get('form.factory')->create(new SchemaGroupForm($this->container->getParameter('padam87_attribute')), $Schema);
+
+        $request = $this->get('request');
+        if ('POST' == $request->getMethod()) {
+
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                $Schema = $form->getData();
+                
+                foreach ($Schema->getAttributes() as $attribute) {
+                    if ($attribute->getGroup() === null) {
+                        continue;
+                    }
+                    
+                    if (!$Schema->getGroups()->contains($attribute->getGroup())) {
+                        $Schema->getAttributes()->removeElement($attribute);
+                    }
+                }
+
+                $this->_em->persist($Schema);
+                $this->_em->flush();
+
+                $this->get('session')->setFlash('success', $this->get('translator')->trans('messages.save.successful'));
+            } else {
+                $this->get('session')->setFlash('error', $this->get('translator')->trans('messages.save.unsuccessful'));
+            }
+
+            return $this->redirect($this->generateUrl('padam87_attribute_schema_edit', array(
+                'id' => $Schema->getId()
+            )));
         }
 
         return array(

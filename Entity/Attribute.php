@@ -46,7 +46,7 @@ class Attribute
     private $definition;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="attributes")
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="attributes", cascade={"remove"})
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      * @var Group
      */
