@@ -106,7 +106,7 @@ class SchemaController extends Controller
 
                 $this->_em->persist($Schema);
                 $this->_em->flush();
-                
+
                 $this->get('attribute.schema')->orderSchema($Schema);
 
                 $this->get('session')->setFlash('success', $this->get('translator')->trans('messages.save.successful'));
@@ -142,12 +142,12 @@ class SchemaController extends Controller
 
             if ($form->isValid()) {
                 $Schema = $form->getData();
-                
+
                 foreach ($Schema->getAttributes() as $attribute) {
                     if ($attribute->getGroup() === null) {
                         continue;
                     }
-                    
+
                     if (!$Schema->getGroups()->contains($attribute->getGroup())) {
                         $Schema->getAttributes()->removeElement($attribute);
                     }

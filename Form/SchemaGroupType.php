@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class SchemaGroupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {        
+    {
         $builder->add('groups', 'collection', array(
             'type'          => new GroupType(),
             'allow_add'     => true,

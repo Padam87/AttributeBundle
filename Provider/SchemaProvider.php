@@ -24,10 +24,10 @@ class SchemaProvider
         $this->_em = $em;
         $this->schemaRepo = $em->getRepository('Padam87AttributeBundle:Schema');
     }
-    
+
     /**
      * Finds the schema for the given entity
-     * 
+     *
      * @return Schema
      */
     public function get($entity)
