@@ -39,7 +39,7 @@ class Attribute
     private $orderIndex;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Definition", inversedBy="attributes")
+     * @ORM\ManyToOne(targetEntity="Definition", inversedBy="attributes", fetch="EAGER")
      * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
      * @var Definition
      */

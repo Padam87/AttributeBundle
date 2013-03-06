@@ -37,7 +37,7 @@ class Definition
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="Option", mappedBy="definition", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Option", mappedBy="definition", orphanRemoval=true, cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      * @var ArrayCollection
      */
     private $options;
