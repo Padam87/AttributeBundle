@@ -8,7 +8,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="attribute")
- * @UniqueEntity({"definition", "schema", "group"})
  */
 class Attribute
 {
@@ -46,7 +45,7 @@ class Attribute
     private $definition;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="attributes", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="attributes")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      * @var Group
      */

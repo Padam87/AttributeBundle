@@ -25,19 +25,7 @@ class Schema
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    protected $name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @var string
-     */
     protected $className;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var DateTime
-     */
-    protected $updatedAt;
 
     /**
      * @Assert\Valid
@@ -63,7 +51,7 @@ class Schema
 
     public function __toString()
     {
-        return $this->name;
+        return $this->className;
     }
 
     public function __set($name, $value)
@@ -86,29 +74,6 @@ class Schema
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param  string $name
-     * @return Schema
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -200,28 +165,5 @@ class Schema
     public function getGroups()
     {
         return $this->groups;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param  \DateTime $updatedAt
-     * @return Schema
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 }

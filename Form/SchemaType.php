@@ -16,8 +16,6 @@ class SchemaType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array(
-        ));
         $builder->add('className', 'choice', array(
             'choices' => array_flip($this->config['class'])
         ));

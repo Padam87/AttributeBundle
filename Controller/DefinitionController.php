@@ -46,7 +46,6 @@ class DefinitionController extends Controller
 
     /**
      * @Route("/new")
-     * @Template()
      */
     public function newAction()
     {
@@ -65,17 +64,33 @@ class DefinitionController extends Controller
                 $this->_em->persist($Definition);
                 $this->_em->flush();
 
-                $this->get('session')->setFlash('success', $this->get('translator')->trans('messages.save.successful'));
+                if (!$request->isXmlHttpRequest()) {
+                    return $this->redirect($this->generateUrl('padam87_attribute_definition_index'));
 
-                return $this->redirect($this->generateUrl('padam87_attribute_definition_index'));
-            } else {
+                    $this->get('session')->setFlash('success', $this->get('translator')->trans('messages.save.successful'));
+                }
+            } elseif (!$request->isXmlHttpRequest()) {
                 $this->get('session')->setFlash('error', $this->get('translator')->trans('messages.save.unsuccessful'));
             }
         }
 
-        return array(
-            'form' => $form->createView(),
-        );
+        if ($request->isXmlHttpRequest()) {
+            if ('POST' == $request->getMethod()) {
+                return new \Symfony\Component\HttpFoundation\Response(json_encode(array(
+                    'id' => $Definition->getId(),
+                    'name' => $Definition->getName(),
+                )));
+            }
+            
+            return $this->render('Padam87AttributeBundle:Definition:new.ajax.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
+        else {
+            return $this->render('Padam87AttributeBundle:Definition:new.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
     }
 
     /**
