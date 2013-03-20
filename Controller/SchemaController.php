@@ -26,12 +26,12 @@ class SchemaController extends Controller
 
         $config = $this->container->getParameter('padam87_attribute');
         $max = count($config['schema']['class']);
-        
+
         if ($max === 1) {
             $schema = $this->_em->getRepository('Padam87AttributeBundle:Schema')->findOneBy(array(
-                
+
             ));
-            
+
             if ($schema != null) {
                 return $this->redirect($this->generateUrl('padam87_attribute_schema_edit', array(
                     'id' => $schema->getId()
@@ -76,7 +76,7 @@ class SchemaController extends Controller
         if ('POST' == $request->getMethod()) {
 
             $form->bindRequest($request);
-            
+
             if ($form->isValid()) {
                 $schema = $form->getData();
 
@@ -97,13 +97,13 @@ class SchemaController extends Controller
 
         if ($request->isXmlHttpRequest()) {
             $this->_em->refresh($schema);
-            
+
             $class = $schema->getClassName();
 
             $entity = $this->get('attribute.schema')->applyTo(new $class, $schema);
-        
+
             $form = $this->get('form.factory')->create(new Form\PreviewType(), $entity);
-            
+
             return $this->render('Padam87AttributeBundle:Schema:preview.html.twig', array(
                 'form' => $form->createView(),
             ));

@@ -9,10 +9,7 @@ class SchemaListType extends SchemaType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-
-        $builder->add('name', 'text', array(
-            'required' => false
-        ));
+        
         $builder->add('className', 'choice', array(
             'choices' => array_flip($this->config['class']),
             'required' => false
