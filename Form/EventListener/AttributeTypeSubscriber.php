@@ -13,7 +13,8 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
 
     private $defaultOptions = array(
         'allow_expanded' => true,
-        'all_multiple' => false
+        'allow_textarea' => true,
+        'all_multiple' => false,
     );
 
     public function __construct(FormFactoryInterface $factory, $options = array())
@@ -63,8 +64,12 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
                 )
             );
 
+            if ($type == 'textarea' && !$this->getOption('allow_expanded')) {
+                $type = 'text';
+            }
+
             if ($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
-                if (($type == 'checkbox' || $type == 'radio') && $this->getOption('allow_expanded') == true) {
+                if (($type == 'checkbox' || $type == 'radio') && $this->getOption('allow_expanded')) {
                     $params['expanded'] = true;
                 }
 
