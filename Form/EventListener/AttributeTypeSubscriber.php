@@ -50,65 +50,72 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($data->getAttribute()->getDefinition() != null) {
-            $attribute = $data->getAttribute();
-            $group = $attribute->getGroup() ;
-            $definition = $attribute->getDefinition();
+        $this->createValueField($data, $form);
+    }
 
-            $type = $definition->getType();
-            $options = $definition->getOptions()->toArray();
-
-            $params = array(
-                'attr' => array(
-
-                )
-            );
-
-            if ($type == 'textarea' && !$this->getOption('allow_expanded')) {
-                $type = 'text';
-            }
-
-            if ($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
-                if (($type == 'checkbox' || $type == 'radio') && $this->getOption('allow_expanded')) {
-                    $params['expanded'] = true;
-                }
-
-                if ($this->getOption('all_multiple')) {
-                    $params['multiple'] = true;
-                } else {
-                    if ($type == 'radio') {
-                        $params['multiple'] = false;
-                    } elseif ($type == 'checkbox') {
-                        $params['multiple'] = true;
-                    }
-                }
-
-                $params['choices'] = array();
-
-                foreach ($options as $option) {
-                    $params['choices'][$option->getName()] = $option->getName();
-                }
-
-                $type = 'choice';
-            }
-
-            if ($attribute->getRequired() == true) {
-                $params['required'] = true;
-            } else {
-                $params['required'] = false;
-            }
-
-            $params['label'] = $definition->getName();
-
-            if ($group != NULL) {
-                $params['attr']['group'] = $group->getName();
-            }
-
-            if ($attribute->getUnit() != "") {
-                $params['label'] .= ' (' . $attribute->getUnit() . ')';
-            }
-
-            $form->add($this->factory->createNamed('value', $type, $data->getValue(), $params));
+    public function createValueField($data, $form, $fieldName = 'value')
+    {
+        if ($data->getAttribute()->getDefinition() == null) {
+            return false;
         }
+
+        $attribute = $data->getAttribute();
+        $group = $attribute->getGroup() ;
+        $definition = $attribute->getDefinition();
+
+        $type = $definition->getType();
+        $options = $definition->getOptions()->toArray();
+
+        $params = array(
+            'attr' => array(
+
+            )
+        );
+
+        if ($type == 'textarea' && !$this->getOption('allow_expanded')) {
+            $type = 'text';
+        }
+
+        if ($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
+            if (($type == 'checkbox' || $type == 'radio') && $this->getOption('allow_expanded')) {
+                $params['expanded'] = true;
+            }
+
+            if ($this->getOption('all_multiple')) {
+                $params['multiple'] = true;
+            } else {
+                if ($type == 'radio') {
+                    $params['multiple'] = false;
+                } elseif ($type == 'checkbox') {
+                    $params['multiple'] = true;
+                }
+            }
+
+            $params['choices'] = array();
+
+            foreach ($options as $option) {
+                $params['choices'][$option->getName()] = $option->getName();
+            }
+
+            $type = 'choice';
+        }
+
+        if ($attribute->getRequired() == true) {
+            $params['required'] = true;
+        } else {
+            $params['required'] = false;
+        }
+
+        $params['label'] = $definition->getName();
+
+        if ($group != NULL) {
+            $params['attr']['group'] = $group->getName();
+        }
+
+        if ($attribute->getUnit() != "") {
+            $params['label'] .= ' (' . $attribute->getUnit() . ')';
+        }
+
+        $form->add($this->factory->createNamed($fieldName, $type, $data->getValue(), $params));
     }
 }
