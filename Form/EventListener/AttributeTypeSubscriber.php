@@ -65,6 +65,7 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
 
         $type = $definition->getType();
         $options = $definition->getOptions()->toArray();
+        $value = $data->getValue();
 
         $params = array(
             'attr' => array(
@@ -77,6 +78,10 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
         }
 
         if ($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
+            if (!is_array($value)) {
+                $value = array();
+            }
+
             if (($type == 'checkbox' || $type == 'radio') && $this->getOption('allow_expanded')) {
                 $params['expanded'] = true;
             }
@@ -116,6 +121,6 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             $params['label'] .= ' (' . $attribute->getUnit() . ')';
         }
 
-        $form->add($this->factory->createNamed($fieldName, $type, $data->getValue(), $params));
+        $form->add($this->factory->createNamed($fieldName, $type, $value, $params));
     }
 }
