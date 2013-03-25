@@ -103,6 +103,8 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             }
 
             $type = 'choice';
+        } elseif (is_array($value)) {
+            $value = null;
         }
 
         if ($attribute->getRequired() == true) {
