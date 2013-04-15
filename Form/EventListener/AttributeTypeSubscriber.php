@@ -78,10 +78,6 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
         }
 
         if ($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
-            if (!is_array($value)) {
-                $value = array();
-            }
-
             if (($type == 'checkbox' || $type == 'radio') && $this->getOption('allow_expanded')) {
                 $params['expanded'] = true;
             }
@@ -92,6 +88,12 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
                 if ($type == 'radio') {
                     $params['multiple'] = false;
                 } elseif ($type == 'checkbox') {
+                    if (!is_array($value)) {
+                        $value = array(
+                            $value => $value
+                        );
+                    }
+
                     $params['multiple'] = true;
                 }
             }
