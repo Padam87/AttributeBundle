@@ -1,0 +1,7 @@
+{% block attributeCollection_widget %}
+{% spaceless %}
+    {% for attribute in form %}
+        {{ form_row(attribute.value) }}
+    {% endfor %}
+{% endspaceless %}
+{% endblock attributeCollection_widget %}

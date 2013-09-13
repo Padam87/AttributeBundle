@@ -1,12 +1,12 @@
 <?php
 namespace Padam87\AttributeBundle\Form\EventListener;
 
-use Symfony\Component\Form\Event\DataEvent;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;
 
-class AttributeTypeSubscriber implements EventSubscriberInterface
+class AttributeSubscriber implements EventSubscriberInterface
 {
     private $factory;
     private $options;
@@ -41,12 +41,12 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
         return array(FormEvents::PRE_SET_DATA => 'preSetData');
     }
 
-    public function preSetData(DataEvent $event)
+    public function preSetData(FormEvent $event)
     {
         $data = $event->getData();
         $form = $event->getForm();
 
-        if (null === $data || !$form->has('value')) {
+        if (null === $data) {
             return;
         }
 
@@ -55,12 +55,11 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
 
     public function createValueField($data, $form, $fieldName = 'value')
     {
-        if ($data->getAttribute()->getDefinition() == null) {
+        if ($data->getDefinition() == null) {
             return false;
         }
 
-        $attribute = $data->getAttribute();
-        $group = $attribute->getGroup() ;
+        $attribute = $data;
         $definition = $attribute->getDefinition();
 
         $type = $definition->getType();
@@ -109,7 +108,7 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
             $value = null;
         }
 
-        if ($attribute->getRequired() == true) {
+        if ($definition->getRequired() == true) {
             $params['required'] = true;
         } else {
             $params['required'] = false;
@@ -117,13 +116,15 @@ class AttributeTypeSubscriber implements EventSubscriberInterface
 
         $params['label'] = $definition->getName();
 
-        if ($group != NULL) {
-            $params['attr']['group'] = $group->getName();
+        if ($definition->getUnit() != "") {
+            $params['label_attr']['unit'] = $definition->getUnit();
         }
 
-        if ($attribute->getUnit() != "") {
-            $params['label'] .= ' (' . $attribute->getUnit() . ')';
+        if ($definition->getDescription() != "") {
+            $params['label_attr']['help'] = $definition->getDescription();
         }
+
+        $params['auto_initialize'] = false;
 
         $form->add($this->factory->createNamed($fieldName, $type, $value, $params));
     }

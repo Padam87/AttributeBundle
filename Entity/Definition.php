@@ -37,15 +37,42 @@ class Definition
     private $type;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $unit;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    private $required = FALSE;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var string
+     */
+    private $orderIndex;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Schema", inversedBy="definitions")
+     * @ORM\JoinColumn(name="schema_id", referencedColumnName="id")
+     * @var Schema
+     */
+    private $schema;
+
+    /**
      * @ORM\OneToMany(targetEntity="Option", mappedBy="definition", orphanRemoval=true, cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      * @var ArrayCollection
      */
     private $options;
 
     /**
-     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="definition", cascade={"persist", "remove"})
+     * @var \Padam87\AttributeBundle\Entity\Attribute
+     *
+     * @ORM\OneToMany(targetEntity="\Padam87\AttributeBundle\Entity\Attribute", mappedBy="definition", cascade={"remove"})
      */
-    protected $attributes;
+    private $attributes;
 
     /**
      * Constructor
@@ -61,18 +88,6 @@ class Definition
         return $this->name;
     }
 
-    public function __set($name, $value)
-    {
-        $this->$name = $value;
-    }
-
-    public function __get($name)
-    {
-        $getter = "get" . ucfirst($name);
-
-        return $this->$getter();
-    }
-
     /**
      * Get id
      *
@@ -86,7 +101,7 @@ class Definition
     /**
      * Set name
      *
-     * @param  string     $name
+     * @param string $name
      * @return Definition
      */
     public function setName($name)
@@ -109,7 +124,7 @@ class Definition
     /**
      * Set description
      *
-     * @param  string     $description
+     * @param string $description
      * @return Definition
      */
     public function setDescription($description)
@@ -132,7 +147,7 @@ class Definition
     /**
      * Set type
      *
-     * @param  string     $type
+     * @param string $type
      * @return Definition
      */
     public function setType($type)
@@ -153,14 +168,105 @@ class Definition
     }
 
     /**
+     * Set unit
+     *
+     * @param string $unit
+     * @return Definition
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return string
+     */
+    public function getUnit()
+    {
+        return $this->unit;
+    }
+
+    /**
+     * Set required
+     *
+     * @param boolean $required
+     * @return Definition
+     */
+    public function setRequired($required)
+    {
+        $this->required = $required;
+
+        return $this;
+    }
+
+    /**
+     * Get required
+     *
+     * @return boolean
+     */
+    public function getRequired()
+    {
+        return $this->required;
+    }
+
+    /**
+     * Set orderIndex
+     *
+     * @param integer $orderIndex
+     * @return Definition
+     */
+    public function setOrderIndex($orderIndex)
+    {
+        $this->orderIndex = $orderIndex;
+
+        return $this;
+    }
+
+    /**
+     * Get orderIndex
+     *
+     * @return integer
+     */
+    public function getOrderIndex()
+    {
+        return $this->orderIndex;
+    }
+
+    /**
+     * Set schema
+     *
+     * @param \Padam87\AttributeBundle\Entity\Schema $schema
+     * @return Definition
+     */
+    public function setSchema(\Padam87\AttributeBundle\Entity\Schema $schema = null)
+    {
+        $this->schema = $schema;
+
+        return $this;
+    }
+
+    /**
+     * Get schema
+     *
+     * @return \Padam87\AttributeBundle\Entity\Schema
+     */
+    public function getSchema()
+    {
+        return $this->schema;
+    }
+
+    /**
      * Add options
      *
-     * @param  Padam87\AttributeBundle\Entity\Option $options
+     * @param \Padam87\AttributeBundle\Entity\Option $options
      * @return Definition
      */
     public function addOption(\Padam87\AttributeBundle\Entity\Option $options)
     {
-        $options->setDefinition($this);
         $this->options[] = $options;
 
         return $this;
@@ -169,7 +275,7 @@ class Definition
     /**
      * Remove options
      *
-     * @param Padam87\AttributeBundle\Entity\Option $options
+     * @param \Padam87\AttributeBundle\Entity\Option $options
      */
     public function removeOption(\Padam87\AttributeBundle\Entity\Option $options)
     {
@@ -179,7 +285,7 @@ class Definition
     /**
      * Get options
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOptions()
     {
@@ -189,8 +295,7 @@ class Definition
     /**
      * Add attributes
      *
-     * @param  \Padam87\AttributeBundle\Entity\Attribute $attributes
-     * @return Definition
+     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
      */
     public function addAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
     {

@@ -3,13 +3,11 @@
 namespace Padam87\AttributeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="attribute_schema")
- * @UniqueEntity("className")
+ * @ORM\Table("attribute_schema")
  */
 class Schema
 {
@@ -25,45 +23,26 @@ class Schema
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    protected $className;
+    private $className;
 
     /**
      * @Assert\Valid
-     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="schema", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Definition", mappedBy="schema", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"orderIndex" = "ASC"})
      */
-    protected $attributes;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Group", mappedBy="schema", orphanRemoval=true, cascade={"persist", "remove"})
-     * @ORM\OrderBy({"name" = "ASC"})
-     */
-    protected $groups;
+    protected $definitions;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->definitions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
     {
         return $this->className;
-    }
-
-    public function __set($name, $value)
-    {
-        $this->$name = $value;
-    }
-
-    public function __get($name)
-    {
-        $getter = "get" . ucfirst($name);
-
-        return $this->$getter();
     }
 
     /**
@@ -77,43 +56,43 @@ class Schema
     }
 
     /**
-     * Add attributes
+     * Add definitions
      *
-     * @param  \Padam87\AttributeBundle\Entity\Attribute $attributes
-     * @return Schema
+     * @param \Padam87\AttributeBundle\Entity\Definition $definitions
+     * @return AbstractSchema
      */
-    public function addAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
+    public function addDefinition(\Padam87\AttributeBundle\Entity\Definition $definitions)
     {
-        $attributes->setSchema($this);
-        $this->attributes[] = $attributes;
+        $definitions->setSchema($this);
+        $this->definitions[] = $definitions;
 
         return $this;
     }
 
     /**
-     * Remove attributes
+     * Remove definitions
      *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @param \Padam87\AttributeBundle\Entity\Definition $definitions
      */
-    public function removeAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
+    public function removeDefinition(\Padam87\AttributeBundle\Entity\Definition $definitions)
     {
-        $this->attributes->removeElement($attributes);
+        $this->definitions->removeElement($definitions);
     }
 
     /**
-     * Get attributes
+     * Get definitions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAttributes()
+    public function getDefinitions()
     {
-        return $this->attributes;
+        return $this->definitions;
     }
 
     /**
      * Set className
      *
-     * @param  string $className
+     * @param string $className
      * @return Schema
      */
     public function setClassName($className)
@@ -131,39 +110,5 @@ class Schema
     public function getClassName()
     {
         return $this->className;
-    }
-
-    /**
-     * Add groups
-     *
-     * @param  \Padam87\AttributeBundle\Entity\Group $groups
-     * @return Schema
-     */
-    public function addGroup(\Padam87\AttributeBundle\Entity\Group $groups)
-    {
-        $groups->setSchema($this);
-        $this->groups[] = $groups;
-
-        return $this;
-    }
-
-    /**
-     * Remove groups
-     *
-     * @param \Padam87\AttributeBundle\Entity\Group $groups
-     */
-    public function removeGroup(\Padam87\AttributeBundle\Entity\Group $groups)
-    {
-        $this->groups->removeElement($groups);
-    }
-
-    /**
-     * Get groups
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGroups()
-    {
-        return $this->groups;
     }
 }

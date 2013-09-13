@@ -1,0 +1,4 @@
+twig:
+    form:
+        resources:
+            - 'Padam87AttributeBundle:Form:attributeCollection.html.twig'
