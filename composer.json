@@ -4,6 +4,7 @@
     "description": "Padam87 AttributeBundle",
     "keywords": ["symfony", "attribute", "eav"],
     "homepage": "https://github.com/Padam87/AttributeBundle",
+    "license": "MIT",
     "authors": [
         {
             "name": "Adam Prager",
