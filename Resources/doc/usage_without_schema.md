@@ -1,6 +1,6 @@
 #Usage without Schema
 
-Custom fields are related to each data row.
+Custom fields are related to each data row individually.
 
 ##1, Prepare your entity
 
