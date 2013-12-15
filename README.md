@@ -13,3 +13,6 @@ Custom fields are related to the entity. When the schema is updated, the attribu
 
 [Usage without Schema](https://github.com/Padam87/AttributeBundle/blob/master/Resources/doc/usage_without_schema.md):
 Custom fields are related to each data row individually.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Padam87/attributebundle/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
