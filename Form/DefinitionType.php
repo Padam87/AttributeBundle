@@ -19,7 +19,7 @@ class DefinitionType extends AbstractType
             'choices' => array(
                 'text'      => 'Text',
                 'textarea'  => 'Textarea',
-                'select'    => 'Select',
+                'choice'    => 'Select',
                 'checkbox'  => 'Checkbox',
                 'radio'     => 'Radio'
             )
