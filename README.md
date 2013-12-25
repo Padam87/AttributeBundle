@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/Padam87/AttributeBundle.png?branch=master)](https://travis-ci.org/Padam87/AttributeBundle)
+[![Coverage Status](https://coveralls.io/repos/Padam87/AttributeBundle/badge.png)](https://coveralls.io/r/Padam87/AttributeBundle)
+
+
 #Padam87AttributeBundle
 
 An [EAV](http://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_model) implementation for Symfony2.
