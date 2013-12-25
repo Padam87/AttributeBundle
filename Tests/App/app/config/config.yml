@@ -1,0 +1,26 @@
+framework:
+    secret:          asd
+    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    form:            true
+    csrf_protection: true
+    session:         ~
+    default_locale:  en
+    translator:      { fallback: en }
+    profiler:        { only_exceptions: false }
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_sqlite
+        memory: true
+
+    orm:
+        auto_generate_proxy_classes: true
+        entity_managers:
+            default:
+                mappings:
+                    Padam87AttributeBundleTest:
+                        type: annotation
+                        prefix: Padam87\AttributeBundle\Tests\Models
+                        dir: "%kernel.root_dir%/../../Models/"
+                        is_bundle: false

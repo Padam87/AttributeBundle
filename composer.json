@@ -12,7 +12,12 @@
         }
     ],
     "require": {
-        "symfony/symfony": ">2.3.0"
+        "symfony/symfony": ">2.3.0",
+        "doctrine/orm": "*",
+        "doctrine/doctrine-bundle": "*"
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "dev-master"
     },
     "suggest": {
         "padam87/search-bundle": "For easy searching in attributes"

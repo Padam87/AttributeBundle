@@ -1,0 +1,24 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+
+env:
+  - SYMFONY_VERSION=2.3.*
+  - SYMFONY_VERSION=2.4.*
+  - SYMFONY_VERSION=dev-master
+
+before_script:
+  - composer require symfony/symfony:${SYMFONY_VERSION} --no-update
+  - composer update --dev
+
+script: phpunit
+
+after_script:
+  - php vendor/bin/coveralls -v
+
+notifications:
+  email:
+    - prager.adam87@gmail.com
