@@ -79,7 +79,7 @@ Here is very simple working example, just for some pointers:
 
     {% extends "::base.html.twig" %}
 
-    {% block main %}{# or whatever is your block name #}
+    {% block body %}{# or whatever is your block name #}
     <form method="POST" action="{{ path('padam87_attribute_schema_edit', { id: schema.getId() }) }}">
         {{ form_rest(form) }}
 
