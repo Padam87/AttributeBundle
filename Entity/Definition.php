@@ -265,9 +265,10 @@ class Definition
      * @param \Padam87\AttributeBundle\Entity\Option $options
      * @return Definition
      */
-    public function addOption(\Padam87\AttributeBundle\Entity\Option $options)
+    public function addOption(\Padam87\AttributeBundle\Entity\Option $option)
     {
-        $this->options[] = $options;
+        $this->options[] = $option;
+        $option->setDefinition($this);
 
         return $this;
     }
