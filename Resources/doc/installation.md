@@ -2,7 +2,7 @@
 
 ##1, Composer
 
-	"padam87/attribute-bundle": "dev-master"
+	composer require padam87/attribute-bundle
 
 ##2, AppKernel
 
