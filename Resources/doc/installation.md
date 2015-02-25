@@ -28,7 +28,7 @@ This bundle uses `jms/di-extra-bundle`. Make sure you register it in the kernel.
 	        all_bundles: false
 	        bundles: [Padam87AttributeBundle]
 
-jms_di_extra configuration is unnecessary if you have set all_bundles to true
+`jms_di_extra` configuration is unnecessary if you have set `all_bundles` to `true`
 
 ##4, routing.yml
 
