@@ -13,7 +13,7 @@ Custom fields can be unique per row in the DB, or can be related to an entity it
 [Installation](https://github.com/Padam87/AttributeBundle/blob/master/Resources/doc/installation.md)
 
 [Usage with Schema](https://github.com/Padam87/AttributeBundle/blob/master/Resources/doc/usage_with_schema.md):
-Custom fields are related to the entity. When the schema is updated, the attributes are syncronized.
+Custom fields are related to the entity. When the schema is updated, the attributes are synchronized.
 
 [Usage without Schema](https://github.com/Padam87/AttributeBundle/blob/master/Resources/doc/usage_without_schema.md):
 Custom fields are related to each data row individually.

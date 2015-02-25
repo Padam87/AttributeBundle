@@ -1,6 +1,6 @@
 #Usage with Schema
 
-Custom fields are related to the entity. When the schema is updated, the attributes are syncronized.
+Custom fields are related to the entity. When the schema is updated, the attributes are synchronized.
 
 ##1, Prepare your entity
 
@@ -108,4 +108,4 @@ Here is very simple working example, just for some pointers:
 The rest should work like magic.
 
 - A schema is created for each entity with the `@EAV\Entity()` annotation.
-- A listener will syncronise all changes in the schema when an entity is loaded.
+- A listener will synchronize all changes in the schema when an entity is loaded.
