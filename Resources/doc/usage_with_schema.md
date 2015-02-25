@@ -22,7 +22,17 @@ Custom fields are related to the entity. When the schema is updated, the attribu
         ...
     }
 
-If you are not using PHP >=5.4, copy the contents of the trait to your class
+If you are not using PHP >=5.4, copy the contents of the trait to your class.
+If you are not using annotations, you should map the relationship to the
+attributes yourself. For instance, in yaml :
+
+```
+manyToMany:
+    attributes:
+        targetEntity: Padam87\AttributeBundle\Entity\Attribute
+        fetch: EAGER
+        cascade: [persist, remove]
+```
 
 ##2, Update your form
 
