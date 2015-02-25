@@ -36,6 +36,9 @@ manyToMany:
 
 ##2, Update your form
 
+You can use the `Padam87\AttributeBundle\Form\AttributeType` type in the form
+where you want to define new values for a schema that is already defined :
+
 	...
 
     use Padam87\AttributeBundle\Form\AttributeType;
