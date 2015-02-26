@@ -14,9 +14,9 @@ class SchemaCreatorListenerTest extends WebTestCase
 {
     protected function tearDown()
     {
-        static::ensureKernelShutdown();
-
         m::close();
+
+        parent::tearDown();
     }
 
     /**
@@ -25,9 +25,10 @@ class SchemaCreatorListenerTest extends WebTestCase
      */
     public function entityShouldHaveSchema()
     {
-        self::bootKernel();
+        static::$kernel = static::createKernel();
+        static::$kernel->boot();
 
-        $container = self::$kernel->getContainer();
+        $container = static::$kernel->getContainer();
         /** @var Registry $doctrine */
         $doctrine = $container->get('doctrine');
         /** @var EntityManager $em */
