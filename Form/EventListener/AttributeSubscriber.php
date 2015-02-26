@@ -98,7 +98,7 @@ class AttributeSubscriber implements EventSubscriberInterface
             $params['choices'] = [];
 
             foreach ($options as $option) {
-                $params['choices'][$option->getName()] = $option->getName();
+                $params['choices'][$option->getValue()] = $option->getName();
             }
 
             $type = 'choice';

@@ -27,6 +27,13 @@ class Option
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $value;
+
+    /**
      * @var Definition
      *
      * @ORM\ManyToOne(targetEntity="Definition", inversedBy="options")
@@ -60,6 +67,26 @@ class Option
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
     }
 
     /**
