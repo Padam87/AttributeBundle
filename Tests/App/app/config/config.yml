@@ -19,8 +19,13 @@ doctrine:
         entity_managers:
             default:
                 mappings:
+                    Padam87AttributeBundle: ~
                     Padam87AttributeBundleTest:
                         type: annotation
-                        prefix: Padam87\AttributeBundle\Tests\Models
-                        dir: "%kernel.root_dir%/../../Models/"
+                        prefix: Padam87\AttributeBundle\Tests\Model
+                        dir: "%kernel.root_dir%/../../Model/"
                         is_bundle: false
+
+jms_di_extra:
+    locations:
+        directories: ["%kernel.root_dir%/../../../Listener/"]
