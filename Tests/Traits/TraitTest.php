@@ -27,17 +27,4 @@ class TraitTest extends WebTestCase
         $this->assertEquals(1, count($output));
         $this->assertEquals("Clearing the cache for the prod environment with debug false", $output[0]);
     }
-
-    public function testCacheClearNoOptionalWarmers()
-    {
-        exec(
-            'php ' . self::$kernel->getRootDir() . '/console cache:clear --env="prod" --no-optional-warmers',
-            $output,
-            $exitCode
-        );
-
-        $this->assertEquals(0, $exitCode);
-        $this->assertEquals(1, count($output));
-        $this->assertEquals("Clearing the cache for the prod environment with debug false", $output[0]);
-    }
 }
