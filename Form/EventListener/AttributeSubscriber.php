@@ -108,11 +108,7 @@ class AttributeSubscriber implements EventSubscriberInterface
             $value = null;
         }
 
-        if ($definition->getRequired() == true) {
-            $params['required'] = true;
-        } else {
-            $params['required'] = false;
-        }
+        $params['required'] = $definition->getRequired();
 
         $params['label'] = $definition->getName();
 
