@@ -8,9 +8,9 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Tools\SchemaTool;
 use \Mockery as m;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class SchemaCreatorListenerTest extends KernelTestCase
+class SchemaCreatorListenerTest extends WebTestCase
 {
     protected function tearDown()
     {

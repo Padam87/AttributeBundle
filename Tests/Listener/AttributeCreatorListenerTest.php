@@ -9,9 +9,9 @@ use \Mockery as m;
 use Padam87\AttributeBundle\Entity\Definition;
 use Padam87\AttributeBundle\Entity\Schema;
 use Padam87\AttributeBundle\Tests\Model\Subscriber;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class AttributeCreatorListenerTest extends KernelTestCase
+class AttributeCreatorListenerTest extends WebTestCase
 {
     protected function tearDown()
     {
