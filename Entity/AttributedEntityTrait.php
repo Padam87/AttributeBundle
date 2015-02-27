@@ -16,11 +16,11 @@ trait AttributedEntityTrait
     /**
      * Add attributes
      *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @param \Padam87\AttributeBundle\Entity\Attribute $attribute
      */
-    public function addAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
+    public function addAttribute(\Padam87\AttributeBundle\Entity\Attribute $attribute)
     {
-        $this->attributes[] = $attributes;
+        $this->attributes[] = $attribute;
 
         return $this;
     }
@@ -28,11 +28,11 @@ trait AttributedEntityTrait
     /**
      * Remove attributes
      *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @param \Padam87\AttributeBundle\Entity\Attribute $attribute
      */
-    public function removeAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
+    public function removeAttribute(\Padam87\AttributeBundle\Entity\Attribute $attribute)
     {
-        $this->attributes->removeElement($attributes);
+        $this->attributes->removeElement($attribute);
     }
 
     /**
