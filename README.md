@@ -36,6 +36,9 @@ More details in [this guide][1].
 Custom fields are related to each entity instance individually.
 More details in [this guide][2].
 
+## License
+
+This project uses the MIT license.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Padam87/attributebundle/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
