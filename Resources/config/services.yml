@@ -1,0 +1,20 @@
+parameters:
+    attribute.attribute_creator.class: Padam87\AttributeBundle\Listener\AttributeCreatorListener
+    attribute.schema_creator.class: Padam87\AttributeBundle\Listener\SchemaCreatorListener
+    form.type.attributeCollection.class: Padam87\AttributeBundle\Form\Type\AttributeCollectionType
+
+services:
+    attribute.attribute_creator:
+        class: %attribute.attribute_creator.class%
+        tags:
+            - { name: doctrine.event_listener, event: postLoad }
+
+    attribute.schema_creator:
+        class: %attribute.schema_creator.class%
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }
+
+    form.type.attributeCollection:
+        class: %form.type.attributeCollection.class%
+        tags:
+            - { name: form.type, alias: attributeCollection }
