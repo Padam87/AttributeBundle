@@ -4,29 +4,32 @@ Custom fields are related to the entity. When the schema is updated, the attribu
 
 ##1, Prepare your entity
 
-    ...
+```php
+<?php
+// …
 
-	use Padam87\AttributeBundle\Annotation as EAV;
-    use Padam87\AttributeBundle\Entity\AttributedEntityTrait;
+use Padam87\AttributeBundle\Annotation as EAV;
+use Padam87\AttributeBundle\Entity\AttributedEntityTrait;
 
-    ...
+// …
 
-    /**
-     * @EAV\Entity()
-     * ...
-     */
-    class Entity
-    {
-        use AttributedEntityTrait;
+/**
+ * @EAV\Entity()
+ * …
+ */
+class Entity
+{
+    use AttributedEntityTrait;
 
-        ...
-    }
+    // …
+}
+```
 
 If you are not using PHP >=5.4, copy the contents of the trait to your class.
 If you are not using annotations, you should map the relationship to the
 attributes yourself. For instance, in yaml :
 
-```
+```yaml
 manyToMany:
     attributes:
         targetEntity: Padam87\AttributeBundle\Entity\Attribute
@@ -39,22 +42,24 @@ manyToMany:
 You can use the `Padam87\AttributeBundle\Form\AttributeType` type in the form
 where you want to define new values for a schema that is already defined :
 
-	...
+```php
+	// …
 
     use Padam87\AttributeBundle\Form\AttributeType;
 
-    ...
+    // …
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        ...
+        // …
 
         $builder->add('attributes', 'attributeCollection', array(
             'type' => new AttributeType()
         ));
 
-        ...
+        // …
     }
+```
 
 ##3, Make sure the view shows the new attributes field
 
@@ -78,9 +83,12 @@ Route:
 
 You can fetch the schema like by the class name of your entity:
 
+```php
+<?php
     $schema = $em->getRepository('Padam87AttributeBundle:Schema')->findOneBy(array(
         'className' => get_class($entity)
     ));
+```
 
 ###5.2, Creating the view
 
@@ -90,31 +98,33 @@ Create the `edit.html.twig` file under `app/Resources/Padam87AttributeBundle/vie
 
 Here is very simple working example, just for some pointers:
 
-    {% extends "::base.html.twig" %}
+```html+jinja
+{% extends "::base.html.twig" %}
 
-    {% block body %}{# or whatever is your block name #}
-    <form method="POST" action="{{ path('padam87_attribute_schema_edit', { id: schema.getId() }) }}">
-        {{ form_rest(form) }}
+{% block body %}{# or whatever is your block name #}
+<form method="POST" action="{{ path('padam87_attribute_schema_edit', { id: schema.getId() }) }}">
+    {{ form_rest(form) }}
 
-        <div class="form-actions">
-            <button class="btn btn-primary" role="submit">{% trans %}Save{% endtrans %}</button>
-            <a class="btn btn-success" href="#" onclick="Schema.addDefinition(); return false;">
-                {% trans %}Add new item{% endtrans %}
-            </a>
-        </div>
+    <div class="form-actions">
+        <button class="btn btn-primary" role="submit">{% trans %}Save{% endtrans %}</button>
+        <a class="btn btn-success" href="#" onclick="Schema.addDefinition(); return false;">
+            {% trans %}Add new item{% endtrans %}
+        </a>
+    </div>
 
-        <script>
-            Schema = {
-                addDefinition: function() {
-                    var prototype = $('#schema_definitions').data('prototype');
-                    var newItem = prototype.replace(/_name/g, $('#schema_definitions').children().length);
+    <script>
+        Schema = {
+            addDefinition: function() {
+                var prototype = $('#schema_definitions').data('prototype');
+                var newItem = prototype.replace(/_name/g, $('#schema_definitions').children().length);
 
-                    $('#schema_definitions').append(newItem);
-                }
+                $('#schema_definitions').append(newItem);
             }
-        </script>
-    </form>
-    {% endblock %}
+        }
+    </script>
+</form>
+{% endblock %}
+```
 
 ##6, Done
 

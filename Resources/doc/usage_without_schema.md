@@ -4,42 +4,48 @@ Custom fields are related to each data row individually.
 
 ##1, Prepare your entity
 
-    ...
+```php
+<?php
+// …
 
-    use Padam87\AttributeBundle\Entity\AttributedEntityTrait;
+use Padam87\AttributeBundle\Entity\AttributedEntityTrait;
 
-    ...
+// …
 
-    class Entity
-    {
-        use AttributedEntityTrait;
+class Entity
+{
+    use AttributedEntityTrait;
 
-        ...
-    }
+    // …
+}
+```
 
 If you are not using PHP >=5.4, copy the contents of the trait to your class
 
 ##2, Update your form
 
-	...
+```php
+<?php
+// …
 
-    use Padam87\AttributeBundle\Form\CompleteAttributeType;
+use Padam87\AttributeBundle\Form\CompleteAttributeType;
 
-    ...
+// …
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        ...
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+    // …
 
-        $builder->add('attributes', 'collection', array(
-            'type' => new CompleteAttributeType(),
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false
-        ));
+    $builder->add('attributes', 'collection', array(
+        'type' => new CompleteAttributeType(),
+        'allow_add' => true,
+        'allow_delete' => true,
+        'by_reference' => false
+    ));
 
-        ...
-    }
+    // …
+}
+```
 
 ##3, Make sure the view shows the new attributes field
 
