@@ -6,13 +6,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\UnitOfWork;
 use Padam87\AttributeBundle\Entity\Attribute;
-use JMS\DiExtraBundle\Annotation as DI;
 use Doctrine\DBAL\DBALException;
 
-/**
- * @DI\Service("attribute.attribute_creator")
- * @DI\Tag("doctrine.event_listener", attributes = {"event" = "postLoad"})
- */
 class AttributeCreatorListener
 {
     public function postLoad(LifecycleEventArgs $eventArgs)

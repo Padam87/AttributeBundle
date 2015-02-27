@@ -5,13 +5,8 @@ namespace Padam87\AttributeBundle\Listener;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Padam87\AttributeBundle\Entity\Schema;
-use JMS\DiExtraBundle\Annotation as DI;
 use Doctrine\DBAL\DBALException;
 
-/**
- * @DI\Service("attribute.schema_creator")
- * @DI\Tag("doctrine.event_listener", attributes = {"event" = "loadClassMetadata"})
- */
 class SchemaCreatorListener
 {
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
