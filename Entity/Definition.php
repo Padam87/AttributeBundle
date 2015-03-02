@@ -63,6 +63,7 @@ class Definition
 
     /**
      * @ORM\OneToMany(targetEntity="Option", mappedBy="definition", orphanRemoval=true, cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"id" = "ASC"})
      * @var ArrayCollection
      */
     private $options;
