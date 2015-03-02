@@ -67,9 +67,7 @@ class AttributeSubscriber implements EventSubscriberInterface
         $value = $data->getValue();
 
         $params = array(
-            'attr' => array(
-
-            )
+            'attr' => $form->getConfig()->getOptions()['attr']
         );
 
         if ($type == 'textarea' && !$this->getOption('allow_expanded')) {
