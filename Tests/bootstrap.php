@@ -14,8 +14,7 @@ require $autoloadFile;
 AnnotationRegistry::registerAutoloadNamespaces(
     [
         'Doctrine\ORM\Mapping' => $vendorDir . '/doctrine/orm/lib/',
-        'Symfony\Component\Validator\Constraints' => $vendorDir . '/symfony/symfony/src',
-        'JMS\DiExtraBundle\Annotation' => $vendorDir . '/jms/di-extra-bundle'
+        'Symfony\Component\Validator\Constraints' => $vendorDir . '/symfony/symfony/src'
     ]
 );
 AnnotationRegistry::registerFile($rootDir.'/Entity.php');
