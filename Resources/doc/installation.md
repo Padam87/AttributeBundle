@@ -16,12 +16,3 @@
 	imports:
 	    ...
 	    - { resource: "@Padam87AttributeBundle/Resources/config/config.yml" }
-
-	...
-
-	jms_di_extra:
-	    locations:
-	        all_bundles: false
-	        bundles: [Padam87AttributeBundle]
-
-`jms_di_extra` configuration is unnecessary if you have set `all_bundles` to `true`
