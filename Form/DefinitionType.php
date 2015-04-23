@@ -24,6 +24,14 @@ class DefinitionType extends AbstractType
                 'radio'     => 'Radio'
             )
         ));
+        $builder->add('options', 'collection', array(
+            'type'          => new OptionType(),
+            'allow_add'     => true,
+            'allow_delete'  => true,
+            'prototype'     => true,
+            'by_reference'  => false,
+            'options'       => array(),
+        ));
         $builder->add('unit', 'text', array(
             'required' => false
         ));
