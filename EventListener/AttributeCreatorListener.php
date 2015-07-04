@@ -7,51 +7,62 @@ use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use Padam87\AttributeBundle\Entity\Attribute;
+use Padam87\AttributeBundle\Entity\Schema;
 
 class AttributeCreatorListener
 {
+    private $entities;
+
+    public function __construct($cacheDir)
+    {
+        $this->entities = include $cacheDir . '/padam87/attribute_bundle/Entity.cache.php';
+    }
+
     public function postLoad(LifecycleEventArgs $eventArgs)
     {
         $em = $eventArgs->getEntityManager();
         $uow = $em->getUnitOfWork();
         $entity = $eventArgs->getEntity();
-        $refl = new \ReflectionClass($entity);
+        $classname = get_class($entity);
 
-        $reader = new AnnotationReader();
+        if (!array_key_exists($classname, $this->entities)) {
+            return null;
+        }
 
-        if ($reader->getClassAnnotation($refl, 'Padam87\AttributeBundle\Annotation\Entity') != null) {
-            try {
-                $schema = $em->getRepository('Padam87AttributeBundle:Schema')->findOneBy([
-                    'className' => $refl->getName(),
-                ]);
+        /** @var Schema $schema */
+        $schema = $em->getRepository('Padam87AttributeBundle:Schema')->findOneBy([
+            'className' => $classname,
+        ]);
 
-                if ($schema !== null) {
-                    foreach ($schema->getDefinitions() as $definition) {
-                        $qb = $em->getRepository($refl->getName())->createQueryBuilder('main');
+        if ($schema === null) {
+            throw new \UnexpectedValueException('Schema not found for ' . $classname);
+        }
 
-                        $qb->join('main.attributes', 'a', 'WITH', 'a.definition = :definition');
-                        $qb->where('main = :main');
-                        $qb->setParameter('definition', $definition);
-                        $qb->setParameter('main', $entity);
+        $qb = $em->getRepository($classname)->createQueryBuilder('main');
 
-                        $attribute = $qb->getQuery()->getOneOrNullResult();
+        $qb
+            ->distinct()
+            ->select('d.id')
+            ->join('main.attributes', 'a')
+            ->join('a.definition', 'd', null, null, 'd.id')
+            ->where('main = :main')
+            ->setParameter('main', $entity)
+        ;
 
-                        if ($attribute === null) {
-                            $attribute = new Attribute();
-                            $attribute->setDefinition($definition);
+        $definitions = $qb->getQuery()->getArrayResult();
 
-                            $entity->addAttribute($attribute);
+        foreach ($schema->getDefinitions() as $definition) {
+            if (!array_key_exists($definition->getId(), $definitions)) {
+                $attribute = new Attribute();
+                $attribute->setDefinition($definition);
 
-                            if ($uow->getEntityState($entity) == UnitOfWork::STATE_MANAGED) {
-                                $em->persist($entity);
-                                $em->flush($entity);
-                            }
-                        }
-                    }
-                }
-            } catch (DBALException $e) {
-                // Discard DBAL exceptions in order for schema:update to work
+                $entity->addAttribute($attribute);
             }
+        }
+
+        if ($uow->getEntityState($entity) == UnitOfWork::STATE_MANAGED) {
+            $em->persist($entity);
+            $em->flush($entity);
         }
     }
 }

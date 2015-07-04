@@ -12,6 +12,8 @@ use Padam87\AttributeBundle\Entity\AttributedEntityTrait;
  */
 class Subscriber
 {
+    use AttributedEntityTrait;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -21,5 +23,30 @@ class Subscriber
      */
     protected $id;
 
-    use AttributedEntityTrait;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $name;
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 }
