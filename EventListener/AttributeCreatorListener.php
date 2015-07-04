@@ -1,6 +1,6 @@
 <?php
 
-namespace Padam87\AttributeBundle\Listener;
+namespace Padam87\AttributeBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;

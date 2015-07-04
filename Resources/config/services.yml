@@ -1,5 +1,5 @@
 parameters:
-    attribute.attribute_creator.class: Padam87\AttributeBundle\Listener\AttributeCreatorListener
+    attribute.attribute_creator.class: Padam87\AttributeBundle\EventListener\AttributeCreatorListener
     form.type.attributeCollection.class: Padam87\AttributeBundle\Form\Type\AttributeCollectionType
 
 services:

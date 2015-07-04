@@ -1,17 +1,17 @@
 <?php
 
-namespace Padam87\AttributeBundle\Tests\Listener;
+namespace Padam87\AttributeBundle\Tests\EventListener;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use \Mockery as m;
 use Padam87\AttributeBundle\Entity\Definition;
 use Padam87\AttributeBundle\Entity\Schema;
 use Padam87\AttributeBundle\Tests\Model\Subscriber;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class AttributeCreatorListenerTest extends WebTestCase
+class AttributeCreatorListenerTest extends KernelTestCase
 {
     protected function tearDown()
     {
@@ -30,7 +30,7 @@ class AttributeCreatorListenerTest extends WebTestCase
         static::$kernel->boot();
 
         $container = static::$kernel->getContainer();
-        /** @var Registry $doctrine */
+        /** @var ManagerRegistry $doctrine */
         $doctrine = $container->get('doctrine');
         /** @var EntityManager $em */
         $em = $doctrine->getManager();
