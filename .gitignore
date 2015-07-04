@@ -2,3 +2,4 @@ vendor/*
 .idea
 build
 composer.lock
+Tests/App/app/cache

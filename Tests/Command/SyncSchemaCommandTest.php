@@ -7,10 +7,10 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Padam87\AttributeBundle\Command\SyncSchemaCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class SyncSchemaCommandTest extends KernelTestCase
+class SyncSchemaCommandTest extends WebTestCase
 {
     protected function setUp()
     {
