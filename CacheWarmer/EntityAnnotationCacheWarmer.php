@@ -17,11 +17,18 @@ class EntityAnnotationCacheWarmer implements CacheWarmerInterface
     private $doctrine;
 
     /**
-     * @param ManagerRegistry $doctrine
+     * @var bool
      */
-    public function __construct(ManagerRegistry $doctrine)
+    private $debug;
+
+    /**
+     * @param ManagerRegistry $doctrine
+     * @param                 $debug
+     */
+    public function __construct(ManagerRegistry $doctrine, $debug)
     {
         $this->doctrine = $doctrine;
+        $this->debug = $debug;
     }
 
     /**
@@ -37,14 +44,9 @@ class EntityAnnotationCacheWarmer implements CacheWarmerInterface
      */
     public function warmUp($cacheDir)
     {
-        $dirname = $cacheDir . '/padam87/attribute_bundle';
+        $filename = $cacheDir . '/padam87/attribute_bundle/Entity.cache.php';
 
-        if (!is_dir($dirname)) {
-            @mkdir($dirname, 0666, true);
-        }
-
-        $filename = $dirname . DIRECTORY_SEPARATOR . 'Entity.cache.php';
-        $cache = new ConfigCache($filename, true);
+        $cache = new ConfigCache($filename, $this->debug);
 
         if (!$cache->isFresh()) {
             $content  = '<?php return ' . var_export($this->getEntities(), true) . ';';

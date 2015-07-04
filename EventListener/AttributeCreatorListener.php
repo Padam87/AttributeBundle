@@ -11,11 +11,13 @@ use Padam87\AttributeBundle\Entity\Schema;
 
 class AttributeCreatorListener
 {
-    private $entities;
+    private $entities = null;
+
+    private $cacheDir;
 
     public function __construct($cacheDir)
     {
-        $this->entities = include $cacheDir . '/padam87/attribute_bundle/Entity.cache.php';
+        $this->cacheDir = $cacheDir;
     }
 
     public function postLoad(LifecycleEventArgs $eventArgs)
@@ -25,7 +27,7 @@ class AttributeCreatorListener
         $entity = $eventArgs->getEntity();
         $classname = get_class($entity);
 
-        if (!array_key_exists($classname, $this->entities)) {
+        if (!array_key_exists($classname, $this->getEntities())) {
             return null;
         }
 
@@ -64,5 +66,17 @@ class AttributeCreatorListener
             $em->persist($entity);
             $em->flush($entity);
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEntities()
+    {
+        if ($this->entities === null) {
+            $this->entities = include $this->cacheDir . '/padam87/attribute_bundle/Entity.cache.php';
+        }
+
+        return $this->entities;
     }
 }

@@ -3,12 +3,13 @@ parameters:
     form.type.attributeCollection.class: Padam87\AttributeBundle\Form\Type\AttributeCollectionType
 
 services:
-    padam87_doctrine_cache_invalidator.cache_warmer:
+    padam87_attribute_bundle.cache_warmer:
         class: Padam87\AttributeBundle\CacheWarmer\EntityAnnotationCacheWarmer
         arguments:
             - @doctrine
+            - %kernel.debug%
         tags:
-            - { name: kernel.cache_warmer }
+            - { name: kernel.cache_warmer, priority: 64 }
 
     attribute.attribute_creator:
         class: %attribute.attribute_creator.class%
