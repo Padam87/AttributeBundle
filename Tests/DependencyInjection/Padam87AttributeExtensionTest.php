@@ -23,11 +23,6 @@ class Padam87AttributeExtensionTest extends AbstractExtensionTestCase
             array('event' => 'postLoad')
         );
         $this->assertContainerBuilderHasServiceDefinitionWithTag(
-            'attribute.schema_creator',
-            'doctrine.event_listener',
-            array('event' => 'loadClassMetadata')
-        );
-        $this->assertContainerBuilderHasServiceDefinitionWithTag(
             'form.type.attributeCollection',
             'form.type',
             array('alias' => 'attributeCollection')
