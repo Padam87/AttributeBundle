@@ -49,7 +49,7 @@ class SyncSchemaCommand extends ContainerAwareCommand
 
             if ($reader->getClassAnnotation($refl, 'Padam87\AttributeBundle\Annotation\Entity') != null) {
                 $schema = $em->getRepository('Padam87AttributeBundle:Schema')->findOneBy([
-                    'className' => $metadata->getName()
+                    'className' => $metadata->getName(),
                 ]);
 
                 if ($schema === null) {

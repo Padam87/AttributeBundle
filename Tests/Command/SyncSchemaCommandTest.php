@@ -5,7 +5,6 @@ namespace Padam87\AttributeBundle\Tests\Command;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
-use \Mockery as m;
 use Padam87\AttributeBundle\Command\SyncSchemaCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

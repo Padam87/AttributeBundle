@@ -1,23 +1,23 @@
 <?php
 namespace Padam87\AttributeBundle\Form\EventListener;
 
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class AttributeSubscriber implements EventSubscriberInterface
 {
     private $factory;
     private $options;
 
-    private $defaultOptions = array(
+    private $defaultOptions = [
         'allow_expanded' => true,
         'allow_textarea' => true,
         'all_multiple' => false,
-    );
+    ];
 
-    public function __construct(FormFactoryInterface $factory, $options = array())
+    public function __construct(FormFactoryInterface $factory, $options = [])
     {
         $this->factory = $factory;
         $this->options = $options;
@@ -38,7 +38,7 @@ class AttributeSubscriber implements EventSubscriberInterface
     {
         // Tells the dispatcher that we want to listen on the form.pre_set_data
         // event and that the preSetData method should be called.
-        return array(FormEvents::PRE_SET_DATA => 'preSetData');
+        return [FormEvents::PRE_SET_DATA => 'preSetData'];
     }
 
     public function preSetData(FormEvent $event)
@@ -66,9 +66,9 @@ class AttributeSubscriber implements EventSubscriberInterface
         $options = $definition->getOptions()->toArray();
         $value = $data->getValue();
 
-        $params = array(
-            'attr' => $form->getConfig()->getOptions()['attr']
-        );
+        $params = [
+            'attr' => $form->getConfig()->getOptions()['attr'],
+        ];
 
         if ($type == 'textarea' && !$this->getOption('allow_expanded')) {
             $type = 'text';
@@ -86,16 +86,16 @@ class AttributeSubscriber implements EventSubscriberInterface
                     $params['multiple'] = false;
                 } elseif ($type == 'checkbox') {
                     if (!is_array($value)) {
-                        $value = array(
-                            $value => $value
-                        );
+                        $value = [
+                            $value => $value,
+                        ];
                     }
 
                     $params['multiple'] = true;
                 }
             }
 
-            $params['choices'] = array();
+            $params['choices'] = [];
 
             foreach ($options as $option) {
                 $params['choices'][$option->getName()] = $option->getName();

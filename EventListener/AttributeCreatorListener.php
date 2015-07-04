@@ -2,11 +2,11 @@
 
 namespace Padam87\AttributeBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use Padam87\AttributeBundle\Entity\Attribute;
-use Doctrine\DBAL\DBALException;
 
 class AttributeCreatorListener
 {
@@ -21,9 +21,9 @@ class AttributeCreatorListener
 
         if ($reader->getClassAnnotation($refl, 'Padam87\AttributeBundle\Annotation\Entity') != null) {
             try {
-                $schema = $em->getRepository('Padam87AttributeBundle:Schema')->findOneBy(array(
-                    'className' => $refl->getName()
-                ));
+                $schema = $em->getRepository('Padam87AttributeBundle:Schema')->findOneBy([
+                    'className' => $refl->getName(),
+                ]);
 
                 if ($schema !== null) {
                     foreach ($schema->getDefinitions() as $definition) {

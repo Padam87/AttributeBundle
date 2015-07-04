@@ -2,10 +2,10 @@
 
 namespace Padam87\AttributeBundle\Tests\EventListener;
 
+use \Mockery as m;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
-use \Mockery as m;
 use Padam87\AttributeBundle\Entity\Definition;
 use Padam87\AttributeBundle\Entity\Schema;
 use Padam87\AttributeBundle\Tests\Model\Subscriber;
