@@ -12,12 +12,15 @@
         }
     ],
     "require": {
-        "symfony/symfony": ">2.3.0",
+        "php": ">=5.4.0",
+        "symfony/symfony": "~2.5",
         "doctrine/orm": "*",
-        "doctrine/doctrine-bundle": "*",
-        "jms/di-extra-bundle": "~1.5"
+        "doctrine/doctrine-bundle": "*"
     },
     "require-dev": {
+        "phpunit/phpunit": "~4.2",
+        "mockery/mockery": "~0.9",
+        "matthiasnoback/symfony-dependency-injection-test": "~0.7.1",
         "satooshi/php-coveralls": "dev-master"
     },
     "suggest": {

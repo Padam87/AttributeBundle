@@ -4,29 +4,30 @@ Custom fields are related to the entity. When the schema is updated, the attribu
 
 ##1, Prepare your entity
 
-    ...
 
-	use Padam87\AttributeBundle\Annotation as EAV;
-    use Padam87\AttributeBundle\Entity\AttributedEntityTrait;
+```php
+use Padam87\AttributeBundle\Annotation as EAV;
+use Padam87\AttributeBundle\Entity\AttributedEntityTrait;
 
-    ...
+// ...
 
-    /**
-     * @EAV\Entity()
-     * ...
-     */
-    class Entity
-    {
-        use AttributedEntityTrait;
+/**
+ * @EAV\Entity()
+ * ...
+ */
+class Entity
+{
+    use AttributedEntityTrait;
 
-        ...
-    }
+    //...
+}
+```
 
 If you are not using PHP >=5.4, copy the contents of the trait to your class.
 If you are not using annotations, you should map the relationship to the
 attributes yourself. For instance, in yaml :
 
-```
+```yml
 manyToMany:
     attributes:
         targetEntity: Padam87\AttributeBundle\Entity\Attribute
@@ -39,86 +40,40 @@ manyToMany:
 You can use the `Padam87\AttributeBundle\Form\AttributeType` type in the form
 where you want to define new values for a schema that is already defined :
 
-	...
+```php
+use Padam87\AttributeBundle\Form\AttributeType;
 
-    use Padam87\AttributeBundle\Form\AttributeType;
+// ...
 
-    ...
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+    // ...
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        ...
+    $builder->add('attributes', 'attributeCollection', array(
+        'type' => new AttributeType()
+    ));
 
-        $builder->add('attributes', 'attributeCollection', array(
-            'type' => new AttributeType()
-        ));
-
-        ...
-    }
+    // ...
+}
+```
 
 ##3, Make sure the view shows the new attributes field
 
-    {{ form_widget(form.attributes) }}
+`{{ form_widget(form.attributes) }}`
 
 ##4, Update your database
 
-    doctrine:schema:update
+Run `doctrine:schema:update` or create a migration to change the sql schema
 
-##5, Editing a schema
+Run `eav:schema:sync` to update the database to the current schema settings
 
-###5.1, General information
+##5, Managing Schemas and Definitions
 
-URL:
-
-    /attribute/schema/edit/{id}
-
-Route:
-
-    padam87_attribute_schema_edit
-
-You can fetch the schema like by the class name of your entity:
-
-    $schema = $em->getRepository('Padam87AttributeBundle:Schema')->findOneBy(array(
-        'className' => get_class($entity)
-    ));
-
-###5.2, Creating the view
-
-The bundle does not provide a View for schema editing, only a Controller, because of the wide range of possible customizations.
-
-Create the `edit.html.twig` file under `app/Resources/Padam87AttributeBundle/views/Schema`
-
-Here is very simple working example, just for some pointers:
-
-    {% extends "::base.html.twig" %}
-
-    {% block body %}{# or whatever is your block name #}
-    <form method="POST" action="{{ path('padam87_attribute_schema_edit', { id: schema.getId() }) }}">
-        {{ form_rest(form) }}
-
-        <div class="form-actions">
-            <button class="btn btn-primary" role="submit">{% trans %}Save{% endtrans %}</button>
-            <a class="btn btn-success" href="#" onclick="Schema.addDefinition(); return false;">
-                {% trans %}Add new item{% endtrans %}
-            </a>
-        </div>
-
-        <script>
-            Schema = {
-                addDefinition: function() {
-                    var prototype = $('#schema_definitions').data('prototype');
-                    var newItem = prototype.replace(/_name/g, $('#schema_definitions').children().length);
-
-                    $('#schema_definitions').append(newItem);
-                }
-            }
-        </script>
-    </form>
-    {% endblock %}
+This bundle does not provide a Controller / View implementation,
+although Sonata admin classes are likely to be added later.
 
 ##6, Done
 
-The rest should work like magic.
+The rest should work like magic. A listener will synchronize all changes in the schema when an entity is loaded.
 
-- A schema is created for each entity with the `@EAV\Entity()` annotation.
-- A listener will synchronize all changes in the schema when an entity is loaded.
+Check the [Cookbook](https://github.com/Padam87/AttributeBundle/blob/master/Resources/doc/cookbook/cookbook.md) for some common use-case examples.

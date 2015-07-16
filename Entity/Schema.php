@@ -2,6 +2,7 @@
 
 namespace Padam87\AttributeBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,42 +13,44 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Schema
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var int
      */
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
      * @var string
+     *
+     * @ORM\Column(type="string", length=255)
      */
     private $className;
 
     /**
+     * @var ArrayCollection
+     *
      * @Assert\Valid
      * @ORM\OneToMany(targetEntity="Definition", mappedBy="schema", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"orderIndex" = "ASC"})
      */
     protected $definitions;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
-        $this->definitions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->definitions = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->className;
     }
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -56,33 +59,28 @@ class Schema
     }
 
     /**
-     * Add definitions
+     * @param Definition $definition
      *
-     * @param \Padam87\AttributeBundle\Entity\Definition $definitions
-     * @return AbstractSchema
+     * @return Schema
      */
-    public function addDefinition(\Padam87\AttributeBundle\Entity\Definition $definitions)
+    public function addDefinition(Definition $definition)
     {
-        $definitions->setSchema($this);
-        $this->definitions[] = $definitions;
+        $definition->setSchema($this);
+        $this->definitions[] = $definition;
 
         return $this;
     }
 
     /**
-     * Remove definitions
-     *
-     * @param \Padam87\AttributeBundle\Entity\Definition $definitions
+     * @param Definition $definitions
      */
-    public function removeDefinition(\Padam87\AttributeBundle\Entity\Definition $definitions)
+    public function removeDefinition(Definition $definitions)
     {
         $this->definitions->removeElement($definitions);
     }
 
     /**
-     * Get definitions
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getDefinitions()
     {
@@ -90,9 +88,8 @@ class Schema
     }
 
     /**
-     * Set className
-     *
      * @param string $className
+     *
      * @return Schema
      */
     public function setClassName($className)
@@ -103,8 +100,6 @@ class Schema
     }
 
     /**
-     * Get className
-     *
      * @return string
      */
     public function getClassName()

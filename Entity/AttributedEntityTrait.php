@@ -2,23 +2,28 @@
 
 namespace Padam87\AttributeBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 trait AttributedEntityTrait
 {
     /**
-     * @var \Padam87\AttributeBundle\Entity\Attribute
+     * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="\Padam87\AttributeBundle\Entity\Attribute", fetch="EAGER", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(
+     *     targetEntity="\Padam87\AttributeBundle\Entity\Attribute",
+     *     fetch="EAGER",
+     *     cascade={"persist", "remove"}
+     * )
      */
     private $attributes;
 
     /**
-     * Add attributes
+     * @param Attribute $attributes
      *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @return $this
      */
-    public function addAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
+    public function addAttribute(Attribute $attributes)
     {
         $this->attributes[] = $attributes;
 
@@ -26,19 +31,15 @@ trait AttributedEntityTrait
     }
 
     /**
-     * Remove attributes
-     *
-     * @param \Padam87\AttributeBundle\Entity\Attribute $attributes
+     * @param Attribute $attributes
      */
-    public function removeAttribute(\Padam87\AttributeBundle\Entity\Attribute $attributes)
+    public function removeAttribute(Attribute $attributes)
     {
         $this->attributes->removeElement($attributes);
     }
 
     /**
-     * Get attributes
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getAttributes()
     {

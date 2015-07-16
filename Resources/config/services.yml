@@ -1,0 +1,24 @@
+parameters:
+    attribute.attribute_creator.class: Padam87\AttributeBundle\EventListener\AttributeCreatorListener
+    form.type.attributeCollection.class: Padam87\AttributeBundle\Form\Type\AttributeCollectionType
+
+services:
+    padam87_attribute_bundle.cache_warmer:
+        class: Padam87\AttributeBundle\CacheWarmer\EntityAnnotationCacheWarmer
+        arguments:
+            - @doctrine
+            - %kernel.debug%
+        tags:
+            - { name: kernel.cache_warmer, priority: 64 }
+
+    attribute.attribute_creator:
+        class: %attribute.attribute_creator.class%
+        arguments:
+            - %kernel.cache_dir%
+        tags:
+            - { name: doctrine.event_listener, event: postLoad }
+
+    form.type.attributeCollection:
+        class: %form.type.attributeCollection.class%
+        tags:
+            - { name: form.type, alias: attributeCollection }

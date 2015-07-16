@@ -11,34 +11,38 @@ use Doctrine\ORM\Mapping as ORM;
 class Attribute
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $value;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Definition", inversedBy="attributes", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
      * @var Definition
+     *
+     * @ORM\ManyToOne(targetEntity="Definition", inversedBy="attributes")
+     * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
      */
     private $definition;
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getDefinition()->getName();
     }
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -47,9 +51,8 @@ class Attribute
     }
 
     /**
-     * Set value
-     *
      * @param string $value
+     *
      * @return Attribute
      */
     public function setValue($value)
@@ -60,8 +63,6 @@ class Attribute
     }
 
     /**
-     * Get value
-     *
      * @return string
      */
     public function getValue()
@@ -70,12 +71,11 @@ class Attribute
     }
 
     /**
-     * Set definition
+     * @param Definition $definition
      *
-     * @param \Padam87\AttributeBundle\Entity\Definition $definition
      * @return Attribute
      */
-    public function setDefinition(\Padam87\AttributeBundle\Entity\Definition $definition = null)
+    public function setDefinition(Definition $definition = null)
     {
         $this->definition = $definition;
 
@@ -83,9 +83,7 @@ class Attribute
     }
 
     /**
-     * Get definition
-     *
-     * @return \Padam87\AttributeBundle\Entity\Definition
+     * @return Definition
      */
     public function getDefinition()
     {
