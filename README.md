@@ -1,5 +1,12 @@
 [![Build Status](https://travis-ci.org/Padam87/AttributeBundle.png?branch=master)](https://travis-ci.org/Padam87/AttributeBundle)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Padam87/AttributeBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Padam87/AttributeBundle/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/Padam87/AttributeBundle/badge.png)](https://coveralls.io/r/Padam87/AttributeBundle)
+
+[![License](https://poser.pugx.org/padam87/attribute-bundle/license)](https://packagist.org/packages/padam87/attribute-bundle)
+[![Latest Stable Version](https://poser.pugx.org/padam87/attribute-bundle/v/stable)](https://packagist.org/packages/padam87/attribute-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/padam87/attribute-bundle/v/unstable)](https://packagist.org/packages/padam87/attribute-bundle)
+[![Total Downloads](https://poser.pugx.org/padam87/attribute-bundle/downloads)](https://packagist.org/packages/padam87/attribute-bundle)
+[![Monthly Downloads](https://poser.pugx.org/padam87/attribute-bundle/d/monthly)](https://packagist.org/packages/padam87/attribute-bundle)
 
 
 #Padam87AttributeBundle
