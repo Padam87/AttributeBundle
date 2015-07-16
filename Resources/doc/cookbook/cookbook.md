@@ -1,0 +1,2 @@
+- [Deployment](https://github.com/Padam87/AttributeBundle/blob/master/Resources/doc/cookbook/deployment.md)
+- [Creating a view for an attributed entity](https://github.com/Padam87/AttributeBundle/blob/master/Resources/doc/cookbook/attribute_view.md)

@@ -11,29 +11,37 @@ use Doctrine\ORM\Mapping as ORM;
 class Option
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var int
      */
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
      * @var string
+     *
+     * @ORM\Column(type="string", length=255)
      */
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $value;
+
+    /**
+     * @var Definition
+     *
      * @ORM\ManyToOne(targetEntity="Definition", inversedBy="options")
      * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
-     * @var AttributeDefinition
      */
     protected $definition;
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -42,10 +50,9 @@ class Option
     }
 
     /**
-     * Set name
+     * @param string $name
      *
-     * @param  string $name
-     * @return Option
+     * @return $this
      */
     public function setName($name)
     {
@@ -55,8 +62,6 @@ class Option
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -65,12 +70,31 @@ class Option
     }
 
     /**
-     * Set definition
-     *
-     * @param  Padam87\AttributeBundle\Entity\Definition $definition
-     * @return Option
+     * @return string
      */
-    public function setDefinition(\Padam87\AttributeBundle\Entity\Definition $definition = null)
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param Definition $definition
+     *
+     * @return $this
+     */
+    public function setDefinition(Definition $definition = null)
     {
         $this->definition = $definition;
 
@@ -78,9 +102,7 @@ class Option
     }
 
     /**
-     * Get definition
-     *
-     * @return Padam87\AttributeBundle\Entity\Definition
+     * @return Definition
      */
     public function getDefinition()
     {

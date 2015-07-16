@@ -10,7 +10,10 @@ class OptionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', []);
+        $builder
+            ->add('name')
+            ->add('value')
+        ;
     }
 
     public function getName()
@@ -20,8 +23,8 @@ class OptionType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Padam87\AttributeBundle\Entity\Option',
-        ));
+        ]);
     }
 }
