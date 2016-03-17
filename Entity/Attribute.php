@@ -30,7 +30,7 @@ class Attribute
      * @var Definition
      *
      * @ORM\ManyToOne(targetEntity="Definition", inversedBy="attributes")
-     * @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="definition_id", referencedColumnName="id", nullable=false)
      */
     private $definition;
 
