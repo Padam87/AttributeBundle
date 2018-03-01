@@ -9,7 +9,12 @@
 [![Monthly Downloads](https://poser.pugx.org/padam87/attribute-bundle/d/monthly)](https://packagist.org/packages/padam87/attribute-bundle)
 
 
-#Padam87AttributeBundle
+# Padam87AttributeBundle
+
+## DEPRECATED
+Please don't use this bundle in a production environment. Years ago, when I created this bundle EAV was a good choice to store data which had a loose schema in SQL. Nowdays we have all kinds of schema less storage options which are better suited for this job.
+
+If you absolutely have to use SQL, EAV can still help you, and this bundle should be able to inspire you.
 
 An [EAV](http://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_model) implementation for Symfony2.
 
